@@ -25,7 +25,7 @@ public class MusicBrowser extends javax.swing.JInternalFrame {
         jPanel1.add(webBrowser, BorderLayout.CENTER);
         webBrowser.setBarsVisible(false);
         webBrowser.setJavascriptEnabled(true);
-        webBrowser.navigate("http://www.youtube.com/");
+        webBrowser.navigate("www.youtube.com");
         
         NativeInterface.open();
         
