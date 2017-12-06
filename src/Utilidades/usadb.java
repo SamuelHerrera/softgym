@@ -80,7 +80,6 @@ public class usadb {
             st.setString(6, "");
 
             if (st.executeUpdate() == 1) {
-                System.out.println("Cliente insertado correctamente");
                 sucessfull = true;
             }
         } catch (Exception ex) {
@@ -100,7 +99,6 @@ public class usadb {
             st.setObject(2, new ImageSerializable(foto));
 
             if (st.executeUpdate() == 1) {
-                System.out.println("FotoCliente insertado correctamente");
                 sucessfull = true;
             }
         } catch (Exception ex) {
@@ -130,7 +128,6 @@ public class usadb {
             st.setBinaryStream(2, huella, largo);
 
             if (st.executeUpdate() == 1) {
-                System.out.println("HuellaCliente insertado correctamente");
                 sucessfull = true;
             }
         } catch (Exception ex) {
@@ -160,7 +157,6 @@ public class usadb {
             st.setBinaryStream(2, huella, largo);
 
             if (st.executeUpdate() == 1) {
-                System.out.println("HuellaCliente actualizada desde cero correctamente");
                 sucessfull = true;
             }
         } catch (Exception ex) {
@@ -177,7 +173,6 @@ public class usadb {
             st = c.prepareStatement("DELETE FROM FechaCorte_Clientes where idcliente= ?");
             st.setInt(1, idcliente);//idmovimiento,----Autoincrementado          
             if (st.executeUpdate() == 1) {
-                System.out.println("elim0");
             }
         } catch (Exception ex) {
             ex.printStackTrace();  //capturas alguna excepcion de la base de datos
@@ -188,7 +183,6 @@ public class usadb {
             st = c.prepareStatement("DELETE FROM FlujoDiarioClientes WHERE idcliente = ?");
             st.setInt(1, idcliente);//idmovimiento,----Autoincrementado          
             if (st.executeUpdate() == 1) {
-                System.out.println("elim1");
             }
         } catch (Exception ex) {
             ex.printStackTrace();  //capturas alguna excepcion de la base de datos
@@ -199,7 +193,6 @@ public class usadb {
             st = c.prepareStatement("DELETE FROM HistorialPagoClientes WHERE idcliente = ?");
             st.setInt(1, idcliente);//idmovimiento,----Autoincrementado          
             if (st.executeUpdate() == 1) {
-                System.out.println("elim2");
             }
         } catch (Exception ex) {
             ex.printStackTrace();  //capturas alguna excepcion de la base de datos
@@ -210,7 +203,6 @@ public class usadb {
             st = c.prepareStatement("DELETE FROM HuellaCliente WHERE idcliente = ?");
             st.setInt(1, idcliente);//idmovimiento,----Autoincrementado          
             if (st.executeUpdate() == 1) {
-                System.out.println("elim3");
             }
         } catch (Exception ex) {
             ex.printStackTrace();  //capturas alguna excepcion de la base de datos
@@ -221,7 +213,6 @@ public class usadb {
             st = c.prepareStatement("DELETE FROM FotoCliente WHERE idcliente = ?");
             st.setInt(1, idcliente);//idmovimiento,----Autoincrementado          
             if (st.executeUpdate() == 1) {
-                System.out.println("elim4");
             }
         } catch (Exception ex) {
             ex.printStackTrace();  //capturas alguna excepcion de la base de datos
@@ -232,7 +223,6 @@ public class usadb {
             st = c.prepareStatement("DELETE FROM cliente WHERE idcliente = ?");
             st.setInt(1, idcliente);//idmovimiento,----Autoincrementado          
             if (st.executeUpdate() == 1) {
-                System.out.println("elim5");
             }
         } catch (Exception ex) {
             ex.printStackTrace();  //capturas alguna excepcion de la base de datos
@@ -254,7 +244,6 @@ public class usadb {
             st.setString(3, contraseña);
             st.setString(4, tipo);
             if (st.executeUpdate() == 1) {
-                System.out.println("Usuario insertado correctamente");
                 sucessfull = true;
             }
         } catch (Exception ex) {
@@ -275,7 +264,6 @@ public class usadb {
             st.setBinaryStream(2, fila, (int) foto.length());
 
             if (st.executeUpdate() == 1) {
-                System.out.println("FotoUsuario insertado correctamente");
                 sucessfull = true;
             }
         } catch (Exception ex) {
@@ -298,7 +286,6 @@ public class usadb {
             st.setBinaryStream(2, huella, largo);
 
             if (st.executeUpdate() == 1) {
-                System.out.println("HuellaUsuario insertado correctamente");
                 sucessfull = true;
             }
         } catch (Exception ex) {
@@ -326,7 +313,6 @@ public class usadb {
             st.setString(6, usuario);
 
             if (st.executeUpdate() == 1) {
-                System.out.println("Ingreso insertado correctamente");
                 sucessfull = true;
             }
         } catch (Exception ex) {
@@ -354,7 +340,6 @@ public class usadb {
             st.setString(6, usuario);
 
             if (st.executeUpdate() == 1) {
-                System.out.println("Egreso insertado correctamente");
                 sucessfull = true;
             }
         } catch (Exception ex) {
@@ -383,7 +368,6 @@ public class usadb {
             st.setDate(7, new java.sql.Date(fterminoperiodo.getTime()));
 
             if (st.executeUpdate() == 1) {
-                System.out.println("CortePeriodo insertado correctamente");
                 sucessfull = true;
             }
         } catch (Exception ex) {
@@ -407,7 +391,6 @@ public class usadb {
             st.setInt(3, idcliente);
 
             if (st.executeUpdate() == 1) {
-                System.out.println("HistorialPagoClientes insertado correctamente");
                 sucessfull = true;
             }
         } catch (Exception ex) {
@@ -429,7 +412,6 @@ public class usadb {
             st.setDate(2, new java.sql.Date(fechacorte.getTime()));
 
             if (st.executeUpdate() == 1) {
-                System.out.println("FechaCorte_Clientes insertado correctamente");
                 sucessfull = true;
             }
         } catch (Exception ex) {
@@ -452,7 +434,6 @@ public class usadb {
             st.setInt(3, idcliente);
 
             if (st.executeUpdate() == 1) {
-                System.out.println("Flujo diario insertado correctamente");
                 sucessfull = true;
             }
         } catch (Exception ex) {
@@ -1456,7 +1437,6 @@ public class usadb {
             }
 
             PreparedStatement preparedStmt = c.prepareStatement(upd);
-            System.out.println(upd);
             for (int i = 0; i < datos.length; i++) {
 
                 if (datos[i].getClass().equals(String.class)) {
@@ -1470,7 +1450,6 @@ public class usadb {
                 }
                 if (datos[i].getClass().equals(java.util.Date.class)) {
                     java.util.Date aux = (java.util.Date) datos[i];
-                    System.out.println("entro a la fehca" + aux.toLocaleString());
                     preparedStmt.setDate(i + 1, new java.sql.Date(aux.getTime()));
                 }
 
@@ -1486,14 +1465,11 @@ public class usadb {
                 DPFPTemplate aux = (DPFPTemplate) datos[1];
                 ByteArrayInputStream huella = new ByteArrayInputStream(aux.serialize());
                 Integer largo = aux.serialize().length;
-                //System.out.println("entro a la fehca"+aux.toLocaleString());
-                System.out.println("entro a actualizar la huella");
                 preparedStmt.setBinaryStream(2, huella, largo);
             }
 
             // execute the java preparedstatement
             if (preparedStmt.executeUpdate() == 1) {
-                System.out.println("Actualizado correctamente: " + tabla + ">>" + datos[0]);
                 sucessfull = true;
             }
         } catch (SQLException ex) {
@@ -1510,7 +1486,6 @@ public class usadb {
             PreparedStatement preparedStmt = c.prepareStatement(upd);
             preparedStmt.setString(1, notas);
             if (preparedStmt.executeUpdate() == 1) {
-                System.out.println("Actualizado correctamente: notas");
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -1532,14 +1507,11 @@ public class usadb {
             PreparedStatement st;
 
             if (dato.getClass().equals(String.class)) {
-                //System.out.println("es un string.. entrando");
-                //  
                 st = c.prepareStatement("DELETE FROM " + tabla + " WHERE " + criterio + " = '" + dato.toString() + "'");
             } else {
                 st = c.prepareStatement("DELETE FROM " + tabla + " WHERE " + criterio + " = " + dato.toString());
             }
             if (st.executeUpdate() == 1) {
-                System.out.println("eliminado correctamente: " + tabla + ">>" + criterio + ">>" + dato.toString());
                 resp = true;
             }
         } catch (SQLException ex) {

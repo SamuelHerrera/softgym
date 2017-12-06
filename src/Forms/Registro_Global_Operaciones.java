@@ -14,16 +14,16 @@ import javax.swing.SwingConstants;
  *
  * @author ErickFrancisco
  */
-public class Concentrados extends javax.swing.JInternalFrame {
+public class Registro_Global_Operaciones extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form Concentrados
      */
-    public Concentrados() {
+    public Registro_Global_Operaciones() {
         initComponents();
         jLabel1.setUI(new VerticalLabelUI(false));
-        jTabbedPane1.add(new PanelIngresos1());
-        jTabbedPane1.add(new PanelEgresos());
+        jTabbedPane1.add(new Panel_Ingresos());
+        jTabbedPane1.add(new Panel_Egresos());
 
     }
 

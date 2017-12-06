@@ -57,19 +57,12 @@ public class Corte extends javax.swing.JInternalFrame {
         if (cortes != null) {
 
             Object[][] movusu = pv.get_movimientos(SoftGym.nombre, "usuario");
-            System.out.println("" + movusu.length);
-            System.out.println(movusu[0][6]);
-            System.out.println("Fecha corte" + cortes[cortes.length - 1][2]);
             if (movusu != null) {
                 for (int i = 0; i < movusu.length; i++) {
                     int x = ((Date) movusu[i][6]).compareTo((Date) cortes[cortes.length - 1][2]);
-                    System.out.println("" + x);
                     if (x >= 0) {
-                        System.out.println("Por aqui paso");
                         total = total + (double) movusu[i][4];
                     }
-                    //JOptionPane.showMessageDialog(this,"No se ha encontrado venta alguna");
-
                 }
                 pv.in_corte((Date) cortes[cortes.length - 1][2], new Date(), totalcaj, total, SoftGym.nombre);
                 actualizar();
@@ -79,19 +72,13 @@ public class Corte extends javax.swing.JInternalFrame {
             fecha.setMonth(0);
             fecha.setDate(1);
             fecha.setYear(115);
-            //Object[][] movimientos=pv.get_movimientos(new Object[]{fecha, new Date()}, "fecha");
             Object[][] movusu = pv.get_movimientos(SoftGym.nombre, "usuario");
             if (movusu != null) {
                 for (int i = 0; i < movusu.length; i++) {
-                    System.out.println("Corte aqui");
-                    System.out.println("Por aqui sdfghj");
-                    //int in= (cortes.length);
                     int x = ((Date) movusu[i][6]).compareTo(fecha);
-                    System.out.println("" + x);
                     if (x > 0) {
                         total = total + (double) movusu[i][4];
                     }
-
                 }
                 pv.in_corte(fecha, new Date(), totalcaj, total, SoftGym.nombre);
                 actualizar();

@@ -216,11 +216,8 @@ public class VentanaPago extends javax.swing.JInternalFrame {
                 productos = productos + "" + prod[i][1] + "; ";
                 //tot=tot+(double)prod[i][5];
 
-                System.out.println(prod[i][1]);
-
                 Object[][] inventario = pv.get_inventario(prod[i][0].toString(), "codigobarra");
                 double cantidad = ((double) inventario[0][3]) - 1;
-                // System.out.println(""+cantidad);
                 pv.actualizar("Inventario", new Object[]{inventario[0][0], inventario[0][1], inventario[0][2], cantidad, inventario[0][4], inventario[0][5]});
             }
             usadb db = new usadb();

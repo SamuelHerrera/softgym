@@ -26,9 +26,9 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-import Forms.AgregarCliente;
-import Forms.AgregarUsuario;
-import Forms.EditarCliente;
+import Forms.Registrar_Cliente;
+import Forms.Registrar_Usuario;
+import Forms.Editar_Registro_Cliente;
 
 public class InscripcionHuella_Todos {
 
@@ -57,7 +57,7 @@ public class InscripcionHuella_Todos {
     }
 
     private void EnviarTexto(String string) {
-        System.out.println(string);
+
     }
 
     private void Iniciar() {
@@ -152,7 +152,6 @@ public class InscripcionHuella_Todos {
                         setTemplate(Reclutador.getTemplate());
 
                         SoftGym.hu.stop();
-                        System.out.println("se detuvo hu");
                         SoftGym.syd.start();
 
                         //__________________________________________________________________
@@ -167,18 +166,17 @@ public class InscripcionHuella_Todos {
                                 DPFPVerificationResult result = Verificador.verify(featuresverificacion, referenceTemplate);
 
                                 if (result.isVerified()) {
-                                    //System.out.println("se encontro la huella digital ID:" +huellas[index][0]);
-                                    if (frame.getClass().equals(AgregarUsuario.class)) {
-                                        ((AgregarUsuario) frame).dispose();
-                                        JOptionPane.showMessageDialog((AgregarUsuario) frame, "El cliente ya existe en la base de datos");
+                                    if (frame.getClass().equals(Registrar_Usuario.class)) {
+                                        ((Registrar_Usuario) frame).dispose();
+                                        JOptionPane.showMessageDialog((Registrar_Usuario) frame, "El cliente ya existe en la base de datos");
                                     } else {
-                                        if (frame.getClass().equals(EditarCliente.class)) {
-                                            ((EditarCliente) frame).dispose();
-                                            JOptionPane.showMessageDialog((EditarCliente) frame, "El cliente ya existe en la base de datos");
+                                        if (frame.getClass().equals(Editar_Registro_Cliente.class)) {
+                                            ((Editar_Registro_Cliente) frame).dispose();
+                                            JOptionPane.showMessageDialog((Editar_Registro_Cliente) frame, "El cliente ya existe en la base de datos");
                                         } else {
-                                            ((AgregarCliente) frame).dispose();
-                                            AgregarCliente.bandera = true;
-                                            JOptionPane.showMessageDialog((AgregarCliente) frame, "El cliente ya existe en la base de datos");
+                                            ((Registrar_Cliente) frame).dispose();
+                                            Registrar_Cliente.bandera = true;
+                                            JOptionPane.showMessageDialog((Registrar_Cliente) frame, "El cliente ya existe en la base de datos");
                                         }
                                     }
                                     return;
@@ -193,16 +191,16 @@ public class InscripcionHuella_Todos {
                         setTemplate(Reclutador.getTemplate());
 
                         //__________________________________________________________________
-                        if (frame.getClass().equals(AgregarUsuario.class)) {
-                            ((AgregarUsuario) frame).setTemplate(templateactual);
-                            JOptionPane.showMessageDialog((AgregarUsuario) frame, "La Plantilla de la Huella ha Sido Creada");
+                        if (frame.getClass().equals(Registrar_Usuario.class)) {
+                            ((Registrar_Usuario) frame).setTemplate(templateactual);
+                            JOptionPane.showMessageDialog((Registrar_Usuario) frame, "La Plantilla de la Huella ha Sido Creada");
                         } else {
-                            if (frame.getClass().equals(EditarCliente.class)) {
-                                ((EditarCliente) frame).setTemplate(templateactual);
-                                JOptionPane.showMessageDialog((EditarCliente) frame, "La Plantilla de la Huella ha Sido Creada");
+                            if (frame.getClass().equals(Editar_Registro_Cliente.class)) {
+                                ((Editar_Registro_Cliente) frame).setTemplate(templateactual);
+                                JOptionPane.showMessageDialog((Editar_Registro_Cliente) frame, "La Plantilla de la Huella ha Sido Creada");
                             } else {
-                                ((AgregarCliente) frame).setTemplate(templateactual);
-                                JOptionPane.showMessageDialog((AgregarCliente) frame, "La Plantilla de la Huella ha Sido Creada");
+                                ((Registrar_Cliente) frame).setTemplate(templateactual);
+                                JOptionPane.showMessageDialog((Registrar_Cliente) frame, "La Plantilla de la Huella ha Sido Creada");
                             }
                         }
                         break;
@@ -223,7 +221,7 @@ public class InscripcionHuella_Todos {
         try {
             Lector.startCapture();
         } catch (Exception ex) {
-            System.out.println("Error en IDY 194, sin mayor problema");
+
         }
     }
 
@@ -232,13 +230,13 @@ public class InscripcionHuella_Todos {
     }
 
     private void CrearImagenHuella(DPFPSample sample) {
-        if (frame.getClass().equals(AgregarUsuario.class)) {
-            ((AgregarUsuario) frame).jLabel3.setIcon(new ImageIcon(DPFPGlobal.getSampleConversionFactory().createImage(sample).getScaledInstance(123, 161, Image.SCALE_SMOOTH)));
+        if (frame.getClass().equals(Registrar_Usuario.class)) {
+            ((Registrar_Usuario) frame).jLabel3.setIcon(new ImageIcon(DPFPGlobal.getSampleConversionFactory().createImage(sample).getScaledInstance(123, 161, Image.SCALE_SMOOTH)));
         } else {
-            if (frame.getClass().equals(EditarCliente.class)) {
-                ((EditarCliente) frame).jLabel3.setIcon(new ImageIcon(DPFPGlobal.getSampleConversionFactory().createImage(sample).getScaledInstance(123, 161, Image.SCALE_SMOOTH)));
+            if (frame.getClass().equals(Editar_Registro_Cliente.class)) {
+                ((Editar_Registro_Cliente) frame).jLabel3.setIcon(new ImageIcon(DPFPGlobal.getSampleConversionFactory().createImage(sample).getScaledInstance(123, 161, Image.SCALE_SMOOTH)));
             } else {
-                ((AgregarCliente) frame).jLabel3.setIcon(new ImageIcon(DPFPGlobal.getSampleConversionFactory().createImage(sample).getScaledInstance(123, 161, Image.SCALE_SMOOTH)));
+                ((Registrar_Cliente) frame).jLabel3.setIcon(new ImageIcon(DPFPGlobal.getSampleConversionFactory().createImage(sample).getScaledInstance(123, 161, Image.SCALE_SMOOTH)));
             }
         }
     }

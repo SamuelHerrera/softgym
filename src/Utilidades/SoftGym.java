@@ -21,7 +21,7 @@ import java.net.URL;
 import java.util.Date;
 import javax.swing.JFrame;
 import Forms.Principal;
-import Forms.login;
+import Forms.Login;
 
 /**
  *
@@ -36,7 +36,7 @@ public class SoftGym {
     public static JFrame you;
     public static Principal prin;
     public static Color fondo = Color.GRAY;
-    public static login l;
+    public static Login l;
     public static LeerHuella_Login syd0;
     public static LeerHuella_Principal syd;
     public static InscripcionHuella_Todos hu;
@@ -63,7 +63,6 @@ public class SoftGym {
                 }
             }
         } catch (Exception ex) {
-            System.out.println(ex);
         }
         new Thread() {
             @Override
@@ -79,7 +78,7 @@ public class SoftGym {
             }
         }.start();
 
-        l = new login();
+        l = new Login();
         l.setLocationRelativeTo(null);
         syd0 = new LeerHuella_Login(l);
         SoftGym soft = new SoftGym();
@@ -99,13 +98,6 @@ public class SoftGym {
             }
 
         }.start();
-        //System.out.println("Minimizar: "+soft.minimizar);
-        //System.out.println("Direccion: "+soft.direccion);
-        /*  
-        prin=new Principal();
-        prin.setVisible(true);
-        syd=new SyD(prin);
-         */
     }
 
     //public String maximizar;
@@ -127,7 +119,6 @@ public class SoftGym {
                 fr.close();
             }
         } catch (IOException ex) {
-            System.out.println(ex);
         }
 
     }
@@ -144,9 +135,6 @@ public class SoftGym {
             ncamara = bf.readLine();
             correo = bf.readLine();
             horaenviar = bf.readLine();
-            //maximizar = bf.readLine();
-            //System.out.println(SoftGym.l);
-            //System.out.println("Maximizar: "+maximizar);
         } catch (IOException ex) {
 
         }
@@ -173,7 +161,6 @@ public class SoftGym {
             write.write(mailito + "\r\n");
             write.write(hora + "\r\n");
             write.close();
-            System.out.println("Se escribio en el archivo");
         } catch (Exception ex) {
 
         }
@@ -207,7 +194,7 @@ public class SoftGym {
             responseCode = connection.getResponseCode();
             String mensaje = connection.getResponseMessage();
             if (mensaje.equals("Successful Update")) {
-                System.out.println(responseCode + ":" + connection.getResponseMessage());
+
             } else {
                 //CargadorDDNS.main(new String []{});
             }

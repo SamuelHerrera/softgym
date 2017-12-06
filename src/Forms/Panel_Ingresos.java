@@ -13,19 +13,18 @@ import Utilidades.usadb;
 import Utilidades.SoftGym;
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.util.Date;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.jfree.chart.*;
 import org.jfree.data.general.DefaultPieDataset;
 
-public class PanelEgresos extends javax.swing.JPanel {
+public class Panel_Ingresos extends javax.swing.JPanel {
 
-    double sueldos, pagosServicios, otros1;
-    public double totalEgreso;
+    double inscripcion, mensualidad, otros;
+    public double totalIngreso;
     usadb db = new usadb();
 
-    public PanelEgresos() {
+    public Panel_Ingresos() {
+
         initComponents();
         mostrargrafica();
         mostrar_tablas();
@@ -33,116 +32,132 @@ public class PanelEgresos extends javax.swing.JPanel {
 
     public void mostrargrafica() {
         JFreeChart Grafica;
+        Object[][] dats = db.getAll_Ingresos();
         DefaultPieDataset datos = new DefaultPieDataset();
-
-        Object[][] dats = db.getAll_Egresos();
         for (int i = 0; dats != null && i < dats.length; i++) {
-            if (dats[i][2].equals("Sueldos") && dats[i][5].equals(SoftGym.nombre)) {
+            if (dats[i][2].equals("Inscripcion") && dats[i][5].equals(SoftGym.nombre)) {
                 //dtm.addRow(new Object[]{datos[i][1],datos[i][2], datos[i][3], datos[i][4], datos[i][5]});
-                sueldos = sueldos + (double) dats[i][4];
+                inscripcion = inscripcion + (double) dats[i][4];
 
             }
-            if (dats[i][2].equals("Pagos de servicios") && dats[i][5].equals(SoftGym.nombre)) {
+            if (dats[i][2].equals("Mensualidad") && dats[i][5].equals(SoftGym.nombre)) {
                 //dtm.addRow(new Object[]{datos[i][1],datos[i][2], datos[i][3], datos[i][4], datos[i][5]});
-                pagosServicios = pagosServicios + (double) dats[i][4];
+                mensualidad = mensualidad + (double) dats[i][4];
 
             }
             if (dats[i][2].equals("Otros") && dats[i][5].equals(SoftGym.nombre)) {
 
-                otros1 = otros1 + (double) dats[i][4];
+                otros = otros + (double) dats[i][4];
 
             }
 
         }
-        totalEgreso = sueldos + pagosServicios + otros1;
-        datos.setValue("Sueldos", sueldos);
-        datos.setValue("Pago de servicios", pagosServicios);
-        datos.setValue("otros", otros1);
-        Grafica = ChartFactory.createPieChart("Grafica Gastos", datos, true, true, true);
+        totalIngreso = inscripcion + mensualidad + otros;
+        datos.setValue("Inscripcion", inscripcion);
+        datos.setValue("Mensualidad", mensualidad);
+        datos.setValue("Otros", otros);
+        Grafica = ChartFactory.createPieChart("Grafica Ingresos", datos, true, true, true);
         ChartPanel p = new ChartPanel(Grafica);
         jPanel1.add(p, "grafica");
         CardLayout card = (CardLayout) jPanel1.getLayout();
         card.show(jPanel1, "grafica");
-        jTextField1.setText("$" + totalEgreso);
+        jTextField1.setText("$" + totalIngreso);
     }
 
-    public void mostrar_tablas() {
-        usadb db = new usadb();
-        Object[][] datos = db.getAll_Egresos();
+    public void obtener_inscripcion() {
+        //Object[][] datos = db.getAll_Ingresos();
         DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
         while (jTable1.getRowCount() > 0) {
             dtm.removeRow(0);
         }
 
-        for (int i = 0; datos != null && i < datos.length; i++) {
+    }
+
+    public void mostrar_datos() {
+        Object[][] datos = db.getAll_Ingresos();
+        DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
+        while (jTable1.getRowCount() > 0) {
+            dtm.removeRow(0);
+        }
+        for (int i = 0; i < datos.length; i++) {
             if (datos[i][5].equals(SoftGym.nombre)) {
                 dtm.addRow(new Object[]{datos[i][1], datos[i][2], datos[i][3], datos[i][4], datos[i][5]});
+            }
 
+        }
+    }
+
+    public void mostrar_tablas() {
+        usadb db = new usadb();
+        Object[][] datos = db.getAll_Ingresos();
+        DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
+        while (jTable1.getRowCount() > 0) {
+            dtm.removeRow(0);
+        }
+        for (int i = 0; datos != null && i < datos.length; i++) {
+
+            if (datos[i][5].equals(SoftGym.nombre)) {
+                dtm.addRow(new Object[]{datos[i][1], datos[i][2], datos[i][3], datos[i][4], datos[i][5]});
             }
         }
     }
 
     public void mostrar_tablasFecha() {
         usadb db = new usadb();
-        if (jDateChooser1.getDate() != null || jDateChooser2.getDate() != null) {
-            JOptionPane.showMessageDialog(this, "Debes seleccionar las fechas primero.");
-            return;
-        }
-        Object[][] fechas = db.get_egresos(new Object[]{jDateChooser1.getDate(), jDateChooser2.getDate()}, "fecha");
+        Object[][] fechas = db.get_ingresos(new Object[]{jDateChooser1.getDate(), jDateChooser2.getDate()}, "fecha");
+
         DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
+
         while (jTable1.getRowCount() > 0) {
             dtm.removeRow(0);
         }
         if (jComboBox1.getSelectedItem().toString().equals("---Todo---") && fechas != null) {
-
+            fechas = db.get_ingresos(new Object[]{jDateChooser1.getDate(), jDateChooser2.getDate()}, "fecha");
             for (int i = 0; i < fechas.length; i++) {
                 if (fechas[i][5].equals(SoftGym.nombre)) {
                     dtm.addRow(new Object[]{fechas[i][1], fechas[i][2], fechas[i][3], fechas[i][4], fechas[i][5]});
-
                 }
             }
         }
 
-        if (jComboBox1.getSelectedItem().toString().equals("Sueldos") && fechas != null) {
-            Object[][] sueld = db.get_egresos("Sueldos", "motivo");
-            for (int i = 0; i < fechas.length; i++) {
-                if (fechas[i][5].equals(SoftGym.nombre)) {
-                    dtm.addRow(new Object[]{sueld[i][1], sueld[i][2], sueld[i][3], sueld[i][4], sueld[i][5]});
+        if (jComboBox1.getSelectedItem().equals("Inscripcion") && fechas != null) {
+            Object[][] inscripcion = db.get_ingresos("Inscripcion", "motivo");
+            for (int i = 0; i < inscripcion.length; i++) {
+                if (inscripcion[i][5].equals(SoftGym.nombre)) {
+                    dtm.addRow(new Object[]{inscripcion[i][1], inscripcion[i][2], inscripcion[i][3], inscripcion[i][4], inscripcion[i][5]});
                 }
-
             }
         }
 
-        if (jComboBox1.getSelectedItem().toString().equals("Pagos de servicios") && fechas != null) {
-            Object[][] pds = db.get_egresos("Pagos de servicios", "motivo");
-            for (int i = 0; i < fechas.length; i++) {
-                if (pds[i][5].equals(SoftGym.nombre)) {
-                    dtm.addRow(new Object[]{pds[i][1], pds[i][2], pds[i][3], pds[i][4], pds[i][5]});
-
+        if (jComboBox1.getSelectedItem().equals("Mensualidad") && fechas != null) {
+            Object[][] mens = db.get_ingresos("Mensualidad", "motivo");
+            for (int i = 0; i < mens.length; i++) {
+                if (mens[i][5].equals(SoftGym.nombre)) {
+                    dtm.addRow(new Object[]{mens[i][1], mens[i][2], mens[i][3], mens[i][4], mens[i][5]});
                 }
+
             }
         }
 
         if (jComboBox1.getSelectedItem().toString().equals("Otros") && fechas != null) {
-            Object[][] otr = db.get_egresos("otros", "motivo");
+            Object[][] otros = db.get_ingresos("otros", "motivo");
             for (int i = 0; i < fechas.length; i++) {
-                if (otr[i][5].equals(SoftGym.nombre)) {
-                    dtm.addRow(new Object[]{otr[i][1], otr[i][2], otr[i][3], otr[i][4], otr[i][5]});
+                if (otros[i][5].equals(SoftGym.nombre)) {
+                    dtm.addRow(new Object[]{otros[i][1], otros[i][2], otros[i][3], otros[i][4], otros[i][5]});
 
                 }
             }
         }
 
         if (jComboBox1.getSelectedItem().toString().equals("Usuario") && fechas != null) {
-            Object[][] otr = db.get_egresos(SoftGym.nombre, "usuario");
-            for (int i = 0; i < fechas.length; i++) {
-                if (otr[i][5].equals(SoftGym.nombre)) {
-                    dtm.addRow(new Object[]{otr[i][1], otr[i][2], otr[i][3], otr[i][4], otr[i][5]});
+            Object[][] usuario = db.get_ingresos(SoftGym.nombre, "usuario");
+            for (int i = 0; i < usuario.length; i++) {
+                if (usuario[i][5].equals(SoftGym.nombre)) {
+                    dtm.addRow(new Object[]{usuario[i][1], usuario[i][2], usuario[i][3], usuario[i][4], usuario[i][5]});
 
                 }
             }
         }
-
     }
 
     /**
@@ -168,7 +183,7 @@ public class PanelEgresos extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
 
         setBackground(SoftGym.fondo);
-        setName("EGRESOS"); // NOI18N
+        setName("INGRESOS"); // NOI18N
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -192,7 +207,7 @@ public class PanelEgresos extends javax.swing.JPanel {
 
         jLabel3.setText("Hasta:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "---Todo---", "Sueldos", "Pagos de servicios", "Otros", "Usuario" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "---Todo---", "Inscripcion", "Mensualidad", "Otros", "Usuario" }));
 
         jButton1.setFont(new java.awt.Font("Agency FB", 1, 14)); // NOI18N
         jButton1.setText("Buscar");

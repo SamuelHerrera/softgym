@@ -1,28 +1,27 @@
+package Forms;
+
+import Utilidades.SoftGym;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Forms;
-
-import Utilidades.usadb;
-import Utilidades.VerticalLabelUI;
-import Utilidades.SoftGym;
-import java.util.Date;
-import javax.swing.table.DefaultTableModel;
-
 /**
  *
  * @author ErickFrancisco
  */
-public class HistorialPagoClientes extends javax.swing.JInternalFrame {
+public class Dialogo_Minimizar extends javax.swing.JFrame {
 
     /**
-     * Creates new form HistorialPagoClientes
+     * Creates new form VentanaMinimizar
      */
-    public HistorialPagoClientes() {
+    public String x = null;
+
+    public Dialogo_Minimizar(String x) {
         initComponents();
-        actualizartabla();
+        this.setLocationRelativeTo(null);
+        this.x = x;
     }
 
     /**
@@ -35,31 +34,26 @@ public class HistorialPagoClientes extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
-        setClosable(true);
-        setTitle("Historial de pago de cliente");
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setTitle("Minimizar ventana");
+        setAlwaysOnTop(true);
+        setUndecorated(true);
+        setResizable(false);
 
         jPanel1.setBackground(SoftGym.fondo);
+        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+        jLabel1.setText("Un administrador debe colocar su huella en el lector para poder continuar");
 
-            },
-            new String [] {
-                "Motivo", "Descripcion", "Cantidad", "Fecha"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+        jButton1.setText("Cancelar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
-        jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -67,15 +61,21 @@ public class HistorialPagoClientes extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(162, 162, 162)
+                .addComponent(jButton1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -91,35 +91,19 @@ public class HistorialPagoClientes extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-private void actualizartabla() {
-        usadb db = new usadb();
-        Object[][] pagoclientes = db.get_historialPagoClientes(SoftGym.prin.IDCliente, "idcliente");
-        DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
 
-        while (jTable1.getRowCount() > 0) {
-            dtm.removeRow(0);
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        try {
+            SoftGym.prin.s.stop();
+        } catch (Exception ex) {
         }
-
-        for (int jj = 0; pagoclientes != null && jj < pagoclientes.length; jj++) {
-            Object[][] ingresos = db.get_ingresos(pagoclientes[jj][1], "idIngresos");
-
-            System.out.println("entro a for en actualizartable()" + pagoclientes[jj][1]);
-
-            System.out.println("entro a for en actualizartable()");
-            dtm.addRow(new Object[]{
-                ingresos[0][2],
-                ingresos[0][3],
-                ingresos[0][4],
-                ((Date) ingresos[0][1]).toLocaleString().substring(0, 11)}
-            );
-
-        }
-
-    }
+        dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

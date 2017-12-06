@@ -17,12 +17,12 @@ import javax.swing.JOptionPane;
  *
  * @author LeticiaRojas
  */
-public class Botones extends javax.swing.JPanel {
+public class Panel_Botones_Principal extends javax.swing.JPanel {
 
     /**
      * Creates new form Botones
      */
-    public Botones() {
+    public Panel_Botones_Principal() {
         initComponents();
     }
 
@@ -188,32 +188,30 @@ public class Botones extends javax.swing.JPanel {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        PagoClient p = new PagoClient();
+        IN_Pago_Cliente p = new IN_Pago_Cliente();
         p.setVisible(true);
         Principal.jDesktopPane1.add(p);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        AgregarCliente ae = new AgregarCliente();
+        Registrar_Cliente ae = new Registrar_Cliente();
         ae.setLocationRelativeTo(null);
         SoftGym.syd.stop();
-        System.out.println("se detuvo SYD");
         SoftGym.hu = new InscripcionHuella_Todos(ae);
-        System.out.println("se creo hu");
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        AgregarEntrada ag = new AgregarEntrada();
+        IN_Efectivo ag = new IN_Efectivo();
         Principal.jDesktopPane1.add(ag);
         ag.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        AgregarSalid as = new AgregarSalid();
+        OUT_Efectivo as = new OUT_Efectivo();
         Principal.jDesktopPane1.add(as);
         as.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
@@ -223,32 +221,27 @@ public class Botones extends javax.swing.JPanel {
         usadb db = new usadb();
 
         if (SoftGym.prin.IDCliente == (-1)) {
-            Buscar b = new Buscar(new javax.swing.JFrame(), true);
+            Busqueda_Cliente b = new Busqueda_Cliente(new javax.swing.JFrame(), true);
             b.setLocationRelativeTo(null);
             b.setVisible(true);
             Object[][] cliente = db.get_cliente(SoftGym.prin.IDCliente, "idcliente");
             Image fotocliente = db.get_fotocliente(SoftGym.prin.IDCliente, "idcliente");
-            EditarCliente ac = new EditarCliente();
+            Editar_Registro_Cliente ac = new Editar_Registro_Cliente();
             ac.setLocationRelativeTo(null);
             ac.DesplegarCliente((String) cliente[0][1], (String) cliente[0][2], (String) cliente[0][3], fotocliente);
             ac.setVisible(true);
             SoftGym.syd.stop();
-            System.out.println("se detuvo SYD");
             SoftGym.hu = new InscripcionHuella_Todos(ac);
-            System.out.println("se creo hu");
         } else {
             Object[][] cliente = db.get_cliente(SoftGym.prin.IDCliente, "idcliente");
             Image fotocliente = db.get_fotocliente(SoftGym.prin.IDCliente, "idcliente");
-            EditarCliente ac = new EditarCliente();
+            Editar_Registro_Cliente ac = new Editar_Registro_Cliente();
             ac.setLocationRelativeTo(null);
             ac.DesplegarCliente((String) cliente[0][1], (String) cliente[0][2], (String) cliente[0][3], fotocliente);
             ac.setVisible(true);
             SoftGym.syd.stop();
-            System.out.println("se detuvo SYD");
             SoftGym.syd0.stop();
-            System.out.println("se detuvo SYD0");
             SoftGym.hu = new InscripcionHuella_Todos(ac);
-            System.out.println("se creo hu");
 
         }
 
@@ -256,7 +249,7 @@ public class Botones extends javax.swing.JPanel {
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
-        HistorialPagoClientes hpc = new HistorialPagoClientes();
+        Registro_Pagos_Cliente hpc = new Registro_Pagos_Cliente();
         Principal.jDesktopPane1.add(hpc);
         hpc.setVisible(true);
     }//GEN-LAST:event_jButton8ActionPerformed
@@ -264,7 +257,7 @@ public class Botones extends javax.swing.JPanel {
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         // TODO add your handling code here:
 
-        AsistenciaDiaria ad = new AsistenciaDiaria();
+        Registro_Entradas ad = new Registro_Entradas();
         ad.setVisible(true);
         SoftGym.prin.jDesktopPane1.add(ad);
 

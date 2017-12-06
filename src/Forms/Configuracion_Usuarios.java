@@ -18,12 +18,12 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author ErickFrancisco
  */
-public class EditarEliminarUsuario extends javax.swing.JFrame {
+public class Configuracion_Usuarios extends javax.swing.JFrame {
 
     /**
      * Creates new form EditarEliminarUsuario
      */
-    public EditarEliminarUsuario() {
+    public Configuracion_Usuarios() {
         initComponents();
 
         jLabel1.setUI(new VerticalLabelUI(false));

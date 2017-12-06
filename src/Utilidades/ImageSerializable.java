@@ -16,66 +16,69 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
-public class ImageSerializable implements java.io.Serializable{
+public class ImageSerializable implements java.io.Serializable {
+
     private byte[] imageInByte;
-        
-    public ImageSerializable(Image imag){
-        if(imag==null){imageInByte=null;}//Do nothing
-        else{
-            try{
-                BufferedImage original=new BufferedImage(imag.getWidth(null),imag.getHeight(null),BufferedImage.TYPE_INT_RGB);
-                ByteArrayOutputStream baos=new ByteArrayOutputStream();
+
+    public ImageSerializable(Image imag) {
+        if (imag == null) {
+            imageInByte = null;
+        }//Do nothing
+        else {
+            try {
+                BufferedImage original = new BufferedImage(imag.getWidth(null), imag.getHeight(null), BufferedImage.TYPE_INT_RGB);
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 Graphics2D g2 = original.createGraphics();
                 g2.drawImage(imag, 0, 0, null);
-                ImageIO.write(original,"jpg",baos);
-                imageInByte=baos.toByteArray();
-            }
-            catch(IOException ex){
+                ImageIO.write(original, "jpg", baos);
+                imageInByte = baos.toByteArray();
+            } catch (IOException ex) {
                 Logger.getLogger(ImageSerializable.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
-    
-    public ImageSerializable(File fnew){
+
+    public ImageSerializable(File fnew) {
         try {
-            BufferedImage originalImage=ImageIO.read(fnew);
-            ByteArrayOutputStream baos=new ByteArrayOutputStream();
-            ImageIO.write(originalImage, "bmp", baos );
-            imageInByte=baos.toByteArray();
+            BufferedImage originalImage = ImageIO.read(fnew);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(originalImage, "bmp", baos);
+            imageInByte = baos.toByteArray();
         } catch (IOException ex) {
             Logger.getLogger(ImageSerializable.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public Image getImage(int w,int h){
-       Image imagen=null;
+
+    public Image getImage(int w, int h) {
+        Image imagen = null;
         try {
-            ByteArrayInputStream bais=new ByteArrayInputStream(imageInByte);
+            ByteArrayInputStream bais = new ByteArrayInputStream(imageInByte);
             // ois = new ObjectInputStream(bais);
             BufferedImage read = ImageIO.read(bais);
-            imagen=read.getScaledInstance(w, h, BufferedImage.SCALE_DEFAULT);
-        } 
-        catch (IOException ex ) {
+            imagen = read.getScaledInstance(w, h, BufferedImage.SCALE_DEFAULT);
+        } catch (IOException ex) {
             //Logger.getLogger(ImageSerializable.class.getName()).log(Level.SEVERE, null, ex);
-            
+
+        } catch (NullPointerException ex) {
+            return null;
         }
-        catch(NullPointerException ex){System.out.println("no picture");return null;}
         return imagen;
     }
-    public Image getImage(){
-       Image imagen=null;
+
+    public Image getImage() {
+        Image imagen = null;
         try {
-            ByteArrayInputStream bais=new ByteArrayInputStream(imageInByte);
+            ByteArrayInputStream bais = new ByteArrayInputStream(imageInByte);
             // ois = new ObjectInputStream(bais);
             BufferedImage read = ImageIO.read(bais);
-            imagen=read.getScaledInstance(read.getWidth(), read.getHeight(), BufferedImage.SCALE_DEFAULT);
-        } 
-        catch (IOException ex ) {
+            imagen = read.getScaledInstance(read.getWidth(), read.getHeight(), BufferedImage.SCALE_DEFAULT);
+        } catch (IOException ex) {
             //Logger.getLogger(ImageSerializable.class.getName()).log(Level.SEVERE, null, ex);
-            
+
+        } catch (NullPointerException ex) {
+            return null;
         }
-        catch(NullPointerException ex){System.out.println("no picture");return null;}
         return imagen;
     }
-   
+
 }

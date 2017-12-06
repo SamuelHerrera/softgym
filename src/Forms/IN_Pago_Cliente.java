@@ -16,12 +16,12 @@ import javax.swing.JOptionPane;
  *
  * @author LeticiaRojas
  */
-public class PagoClient extends javax.swing.JInternalFrame {
+public class IN_Pago_Cliente extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form PagoClient
      */
-    public PagoClient() {
+    public IN_Pago_Cliente() {
         initComponents();
         jLabel3.setUI(new VerticalLabelUI(false));
     }
@@ -149,7 +149,7 @@ public class PagoClient extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 409, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

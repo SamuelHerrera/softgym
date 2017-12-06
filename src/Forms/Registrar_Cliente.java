@@ -30,7 +30,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-public class AgregarCliente extends javax.swing.JFrame {
+public class Registrar_Cliente extends javax.swing.JFrame {
 
     /**
      * Creates new form AgregarCliente
@@ -39,7 +39,7 @@ public class AgregarCliente extends javax.swing.JFrame {
     private Image imagen = null;
     public static boolean bandera = false;
 
-    public AgregarCliente() {
+    public Registrar_Cliente() {
         initComponents();
         jDateChooser1.setDate(new Date());
         jLabel1.setUI(new VerticalLabelUI(false));
@@ -333,7 +333,7 @@ public class AgregarCliente extends javax.swing.JFrame {
                 try {
                     imagen = ImageIO.read(this.getClass().getResource("/Imagenes/usuario.jpg"));
                 } catch (IOException ex) {
-                    Logger.getLogger(AgregarCliente.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Registrar_Cliente.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             db.in_FotoCliente(imagen);
@@ -345,10 +345,9 @@ public class AgregarCliente extends javax.swing.JFrame {
 
             //db.actualizar("FechaCorte_Clientes", new Object[]{cliente,jDateChooser1.getDate()});
             dispose();
-            JOptionPane.showMessageDialog(null, "Cliente agregado exitosamente");
+            JOptionPane.showMessageDialog(this, "Cliente agregado exitosamente");
             SoftGym.hu.stop();
             SoftGym.syd.start();
-            System.out.println("se reinicio SYD");
         }
     }
 
@@ -357,7 +356,6 @@ public class AgregarCliente extends javax.swing.JFrame {
         SoftGym.hu.stop();
         dispose();
         SoftGym.syd.start();
-        System.out.println("se reinicio SYD");
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -366,9 +364,7 @@ public class AgregarCliente extends javax.swing.JFrame {
             agregarCliente();
             try {
                 SoftGym.hu.stop();
-                System.out.println("se detuvo HU");
                 SoftGym.syd.start();
-                System.out.println("se reinicio SYD");
             } catch (Exception es) {
             }
         } else {
@@ -379,26 +375,21 @@ public class AgregarCliente extends javax.swing.JFrame {
                 template = DPFPGlobal.getTemplateFactory().createTemplate(templateBuffer);
                 agregarCliente();
             } catch (IOException | ClassNotFoundException ex) {
-                Logger.getLogger(AgregarCliente.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Registrar_Cliente.class.getName()).log(Level.SEVERE, null, ex);
             } finally {
                 try {
                     try {
                         SoftGym.hu.stop();
-                        System.out.println("se detuvo HU");
                         SoftGym.syd.start();
-                        System.out.println("se reinicio SYD");
                     } catch (Exception es) {
                     }
                     ois.close();
 
                 } catch (IOException ex) {
-                    Logger.getLogger(AgregarCliente.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Registrar_Cliente.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            //SoftGym.hu.stop();System.out.println("se detuvo HU");
-
             SoftGym.syd.start();
-            System.out.println("se reinicio SYD");
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -408,28 +399,19 @@ public class AgregarCliente extends javax.swing.JFrame {
             @Override
             public void run() {
                 try {
-                    Process p = new ProcessBuilder("C:\\softgym\\StillCap.exe", "/clipboard", "/delay:3", "/device:1", "/resolution:160x120").start();
+                    Process p = new ProcessBuilder(".\\StillCap.exe", "/clipboard", "/delay:3", "/device:1", "/resolution:160x120").start();
                     p.waitFor();
-
-                    System.out.println("paso por aqui");
-                    // Obtiene el Clipboard del sistema
                     Clipboard cb = Toolkit.getDefaultToolkit().getSystemClipboard();
-
-                    // Obtiene el contenido
                     Transferable t = cb.getContents(null);
                     if (t == null) {
                         return;
                     }
-
-                    // Verifica si una imagen. Si es así, la pone en la 
-                    // etiqueta.
                     if (t.isDataFlavorSupported(DataFlavor.imageFlavor)) {
                         imagen = (Image) t.getTransferData(DataFlavor.imageFlavor);
                         jLabel6.setIcon(new ImageIcon(imagen.getScaledInstance(122, 161, Image.SCALE_DEFAULT)));
                     }
 
                 } catch (IOException | InterruptedException | UnsupportedFlavorException ex) {
-                    // Logger.getLogger(test.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }.start();
@@ -438,9 +420,7 @@ public class AgregarCliente extends javax.swing.JFrame {
     private void jTextField2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyTyped
         // TODO add your handling code here:
         if (evt.getKeyChar() >= 48 && evt.getKeyChar() <= 57) {
-            //System.out.println("ensdfsdfsdftro");
         } else {
-
             evt.consume();
         }
     }//GEN-LAST:event_jTextField2KeyTyped
@@ -448,10 +428,8 @@ public class AgregarCliente extends javax.swing.JFrame {
     private void jTextField4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyTyped
         // TODO add your handling code here:
         if (evt.getKeyChar() >= 48 && evt.getKeyChar() <= 57) {
-            //System.out.println("ensdfsdfsdftro");
         } else {
             if (evt.getKeyChar() == '.') {
-                //entra
             } else {
                 evt.consume();
             }
@@ -459,14 +437,11 @@ public class AgregarCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField4KeyTyped
     private int x, y;
     private void jPanel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MousePressed
-        // TODO add your handling code here:
-        // TODO add your handling code here:
         x = evt.getX();
         y = evt.getY();
     }//GEN-LAST:event_jPanel2MousePressed
 
     private void jPanel2MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseDragged
-        // TODO add your handling code here:
         if (getExtendedState() == NORMAL) {
             Point point = MouseInfo.getPointerInfo().getLocation();
             setLocation(point.x - x, point.y - y);

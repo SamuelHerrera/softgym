@@ -14,7 +14,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  *
  * @author ErickFrancisco
  */
-public class ChangeFondo extends javax.swing.JDialog {
+public class Ventana_Cambio_Wallpaper extends javax.swing.JDialog {
 
     /**
      * Creates new form ChangeFondo
@@ -23,7 +23,7 @@ public class ChangeFondo extends javax.swing.JDialog {
     SoftGym soft = new SoftGym();
     int returnVal;
 
-    public ChangeFondo(java.awt.Frame parent, boolean modal) {
+    public Ventana_Cambio_Wallpaper(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
@@ -39,8 +39,6 @@ public class ChangeFondo extends javax.swing.JDialog {
         soft.leer();
 
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-            //System.out.println("You chose to open this file: " +
-            //     chooser.getSelectedFile().getName()+"----"+chooser.getSelectedFile().getAbsolutePath());
             soft.Escribir(chooser.getSelectedFile().getAbsolutePath(), soft.minimizar, soft.ajustes, soft.reportes, soft.ncamara, soft.correo, soft.horaenviar);
             dispose();
             JOptionPane.showMessageDialog(this, "Fondo Cambiado Exitosamente\nReinicie el programa para ver los cambios");

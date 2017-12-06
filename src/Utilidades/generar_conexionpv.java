@@ -29,7 +29,6 @@ public class generar_conexionpv {
                 String usr = "root";
                 Class.forName(driver);
                 con = DriverManager.getConnection(url, usr, pwd);
-                System.out.println("Conection Succesfull");
             }
         } catch (ClassNotFoundException | SQLException ex) {
             try {
@@ -40,13 +39,9 @@ public class generar_conexionpv {
                 String usr = "root";
                 Class.forName(driver);
                 con = DriverManager.getConnection(url, usr, pwd);
-                System.out.println("Conection Succesfull");
             } catch (Exception e) {
                 System.exit(0);
             }
-            //ex.printStackTrace();
-//             Mensajes m=new Mensajes("Error de conexion","No se puede conectar a la base de datos, contacte a soporte!.");
-
         }
         return con;
     }
@@ -60,9 +55,7 @@ class MiShDwnHook1 extends Thread {// justo antes de ﬁ nalizar el programa la 
         try {
             Connection con = generar_conexionpv.getConnection();
             con.close();
-            System.out.println("Connection closed succesfully");
         } catch (Exception ex) {
-            //throw new RuntimeException(ex);       
         }
     }
 }

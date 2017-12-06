@@ -13,33 +13,29 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author ErickFrancisco
  */
-public class AsistenciaDiaria extends javax.swing.JInternalFrame {
+public class Registro_Pagos_Atrasados extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form AsistenciaDiaria
+     * Creates new form morosos
      */
-    public AsistenciaDiaria() {
+    public Registro_Pagos_Atrasados() {
         initComponents();
-        desplegar();
-    }
-
-    public void desplegar() {
-        DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
-
         usadb db = new usadb();
-        Date inicio = new Date();
-        inicio.setHours(0);
-        inicio.setMinutes(0);
+        DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
+        Date hoy = new Date();
+        Date iniciodelostiempos = new Date();
+        iniciodelostiempos.setYear(0);
+        Object[][] clienmor = db.get_fechaCorteClientes(new Object[]{iniciodelostiempos, hoy}, "fechacorte");
 
-        Date termino = new Date();
-        termino.setDate(inicio.getDate() + 1);
-        Object[][] flujo = db.get_flujoDiarioClientes(new Object[]{inicio, termino}, "fechahora");
-
-        for (int i = flujo.length - 1; flujo != null && i >= 0; i--) {
-            Object[][] cliente = db.get_cliente(flujo[i][2], "idcliente");
-            dtm.addRow(new Object[]{flujo[i][2], cliente[0][1], ((Date) flujo[i][1]).toLocaleString().substring(11, 18)});
+        for (int i = 0; clienmor != null && i < clienmor.length; i++) {
+            Object[][] cliente = db.get_cliente(clienmor[i][0], "idcliente");
+            Object[][] pagos = db.get_historialPagoClientes(clienmor[i][0], "idcliente");
+            Object[][] ingreso = db.get_ingresos(pagos[pagos.length - 1][1], "idIngresos");
+            dtm.addRow(new Object[]{
+                cliente[0][1],
+                clienmor[i][1],
+                ((Date) ingreso[0][1]).toLocaleString().substring(0, 11)});
         }
-
     }
 
     /**
@@ -57,15 +53,14 @@ public class AsistenciaDiaria extends javax.swing.JInternalFrame {
         setClosable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("Asistencia del dia");
-        setToolTipText("");
+        setTitle("Clientes con pagos atrasados");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID", "Nombre", "Hora de entrada"
+                "Cliente", "Fecha Corte", "Fecha ult/pago"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -77,11 +72,6 @@ public class AsistenciaDiaria extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setMinWidth(50);
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(50);
-            jTable1.getColumnModel().getColumn(0).setMaxWidth(50);
-        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -89,14 +79,14 @@ public class AsistenciaDiaria extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 591, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
                 .addContainerGap())
         );
 

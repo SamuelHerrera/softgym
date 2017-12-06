@@ -29,7 +29,6 @@ public class generar_conexion {
                 String usr = "root";
                 Class.forName(driver);
                 con = DriverManager.getConnection(url, usr, pwd);
-                System.out.println("Conection Succesfull");
             }
         } catch (ClassNotFoundException | SQLException ex) {
             try {
@@ -40,7 +39,6 @@ public class generar_conexion {
                 String usr = "root";
                 Class.forName(driver);
                 con = DriverManager.getConnection(url, usr, pwd);
-                System.out.println("Conection Succesfull");
             } catch (Exception e) {
                 System.exit(0);
             }
@@ -60,7 +58,6 @@ class MiShDwnHook extends Thread {// justo antes de ﬁ nalizar el programa la J
         try {
             Connection con = generar_conexion.getConnection();
             con.close();
-            System.out.println("Connection closed succesfully");
         } catch (Exception ex) {
             //throw new RuntimeException(ex);       
         }

@@ -22,12 +22,12 @@ import java.util.logging.Logger;
  *
  * @author ErickFrancisco
  */
-public class login extends javax.swing.JFrame {
+public class Login extends javax.swing.JFrame {
 
     /**
      * Creates new form login
      */
-    public login() {
+    public Login() {
         initComponents();
         try {
             // TODO add your handling code here:
@@ -38,7 +38,7 @@ public class login extends javax.swing.JFrame {
             Double y = (tam.getHeight() / 2);
             robot.mouseMove(x.intValue(), y.intValue());
         } catch (AWTException ex) {
-            Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (SoftGym.prin == null) {
             jButton3.setVisible(true);
@@ -257,7 +257,7 @@ public class login extends javax.swing.JFrame {
                 Double y = (tam.getHeight() / 2);
                 robot.mouseMove(x.intValue(), y.intValue());
             } catch (AWTException ex) {
-                Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_formMouseExited

@@ -34,7 +34,6 @@ public class BuscarProducto extends javax.swing.JInternalFrame {
 
         if (productos != null && productos.length > 0) {
             for (int i = 0; i < productos.length; i++) {
-                //System.out.println(productos[i][2]);
                 dtm.addRow(new Object[]{productos[i][1], productos[i][2], productos[i][3], productos[i][5]});
             }
             jTable2.setRowSelectionInterval(0, 0);
@@ -153,7 +152,6 @@ public class BuscarProducto extends javax.swing.JInternalFrame {
             dispose();
         }
         productos = pv.buscar_producto(jTextField1.getText());
-        //System.out.println(""+productos[0][2]);
         actualizartabla();
 
     }//GEN-LAST:event_jTextField1KeyReleased
@@ -162,7 +160,6 @@ public class BuscarProducto extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         try {
             String aux = jTable2.getValueAt(jTable2.getSelectedRow(), 0).toString();
-            System.out.println(aux);
             SoftGym.prin.pv.agregarcarrito(aux, 1);
             //punto.agregarcarrito(aux, 1);
             dispose();

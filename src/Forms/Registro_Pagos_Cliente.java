@@ -1,27 +1,28 @@
-package Forms;
-
-import Utilidades.SoftGym;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package Forms;
+
+import Utilidades.usadb;
+import Utilidades.VerticalLabelUI;
+import Utilidades.SoftGym;
+import java.util.Date;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author ErickFrancisco
  */
-public class VentanaMinimizar extends javax.swing.JFrame {
+public class Registro_Pagos_Cliente extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form VentanaMinimizar
+     * Creates new form HistorialPagoClientes
      */
-    public String x = null;
-
-    public VentanaMinimizar(String x) {
+    public Registro_Pagos_Cliente() {
         initComponents();
-        this.setLocationRelativeTo(null);
-        this.x = x;
+        actualizartabla();
     }
 
     /**
@@ -34,26 +35,31 @@ public class VentanaMinimizar extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("Minimizar ventana");
-        setAlwaysOnTop(true);
-        setUndecorated(true);
-        setResizable(false);
+        setClosable(true);
+        setTitle("Historial de pago de cliente");
 
         jPanel1.setBackground(SoftGym.fondo);
-        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jLabel1.setText("Un administrador debe colocar su huella en el lector para poder continuar");
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
 
-        jButton1.setText("Cancelar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+            },
+            new String [] {
+                "Motivo", "Descripcion", "Cantidad", "Fecha"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
+        jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -61,21 +67,15 @@ public class VentanaMinimizar extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+                .addComponent(jScrollPane1)
                 .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(162, 162, 162)
-                .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -91,19 +91,31 @@ public class VentanaMinimizar extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+private void actualizartabla() {
+        usadb db = new usadb();
+        Object[][] pagoclientes = db.get_historialPagoClientes(SoftGym.prin.IDCliente, "idcliente");
+        DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        try {
-            SoftGym.prin.s.stop();
-        } catch (Exception ex) {
+        while (jTable1.getRowCount() > 0) {
+            dtm.removeRow(0);
         }
-        dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+
+        for (int jj = 0; pagoclientes != null && jj < pagoclientes.length; jj++) {
+            Object[][] ingresos = db.get_ingresos(pagoclientes[jj][1], "idIngresos");
+            dtm.addRow(new Object[]{
+                ingresos[0][2],
+                ingresos[0][3],
+                ingresos[0][4],
+                ((Date) ingresos[0][1]).toLocaleString().substring(0, 11)}
+            );
+
+        }
+
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

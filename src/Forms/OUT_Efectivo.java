@@ -14,12 +14,12 @@ import javax.swing.JOptionPane;
  *
  * @author ErickFrancisco
  */
-public class AgregarSalid extends javax.swing.JInternalFrame {
+public class OUT_Efectivo extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form AgregarSalid
      */
-    public AgregarSalid() {
+    public OUT_Efectivo() {
         initComponents();
     }
     public void SalidaEfectivo(){

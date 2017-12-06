@@ -20,14 +20,14 @@ import javax.swing.JOptionPane;
  *
  * @author Erick
  */
-public class Configuracion extends javax.swing.JFrame {
+public class Configuracion_Global extends javax.swing.JFrame {
 
     /**
      * Creates new form Configuracion
      */
     SoftGym prop = new SoftGym();
 
-    public Configuracion() {
+    public Configuracion_Global() {
         initComponents();
         try {
             ObjectInputStream entrada = new ObjectInputStream(new FileInputStream("ddns.obj"));
@@ -36,7 +36,6 @@ public class Configuracion extends javax.swing.JFrame {
         } catch (Exception ex) {
         }
         prop.leer();
-        System.out.println(prop.direccion);
         if (prop.minimizar.equals("true")) {
             jCheckBox1.setSelected(true);
         }
@@ -344,25 +343,21 @@ public class Configuracion extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.setAlwaysOnTop(false);
         SoftGym.syd.stop();
-        System.out.println("se detuvo SYD");
-        SoftGym.hu = new InscripcionHuella_Todos(new AgregarUsuario(this));
-        System.out.println("se creo hu");
-        //this.setAlwaysOnTop(true);
+        SoftGym.hu = new InscripcionHuella_Todos(new Registrar_Usuario(this));
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        EditarEliminarUsuario eeu = new EditarEliminarUsuario();
+        Configuracion_Usuarios eeu = new Configuracion_Usuarios();
         eeu.setLocationRelativeTo(null);
         eeu.setVisible(true);
-
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
 
-        ChangeFondo CF = new ChangeFondo(this, true);
+        Ventana_Cambio_Wallpaper CF = new Ventana_Cambio_Wallpaper(this, true);
 
     }//GEN-LAST:event_jButton3ActionPerformed
 

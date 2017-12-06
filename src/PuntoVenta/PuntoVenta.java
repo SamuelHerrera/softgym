@@ -217,7 +217,7 @@ public class PuntoVenta extends javax.swing.JInternalFrame {
             double prectot = (cantidad * Double.parseDouble(producto[aux][5].toString()));
 
             dtm.addRow(new Object[]{producto[aux][1], producto[aux][2], cantidad, producto[aux][5],
-                 prectot});
+                prectot});
             total = total + prectot;
             cantprod = cantprod + cantidad;
             jLabel2.setText("$" + total);
@@ -238,9 +238,7 @@ public class PuntoVenta extends javax.swing.JInternalFrame {
 
             Object[][] inventario = pv.get_inventario(dtm.getValueAt(i, 0).toString(), "codigobarra");
             double cantidad = ((double) inventario[0][3]) - 1;
-            // System.out.println(""+cantidad);
             pv.actualizar("Inventario", new Object[]{inventario[0][0], inventario[0][1], inventario[0][2], cantidad, inventario[0][4], inventario[0][5]});
-            //System.out.println("Fecha: "+new Date());
         }
     }
 
