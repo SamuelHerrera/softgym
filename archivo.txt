@@ -1,4 +1,4 @@
-C:\softgym\Wallpaper.jpg
+C:\algo.jpeg
 false
 true
 true

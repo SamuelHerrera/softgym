@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package softgym;
+package Forms;
 
 import Utilidades.usadb;
 import Utilidades.VerticalLabelUI;
@@ -22,34 +22,36 @@ public class AgregarUsuario extends javax.swing.JFrame {
      * Creates new form AgregarCliente
      */
     private DPFPTemplate template;
-    private Image imagen=null;  
+    private Image imagen = null;
     private Configuracion c;
+
     public AgregarUsuario(Configuracion c) {
         initComponents();
-        this.c=c;
+        this.c = c;
         this.setLocationRelativeTo(null);
-        
+
         jLabel1.setUI(new VerticalLabelUI(false));
         addWindowListener(new java.awt.event.WindowAdapter() {
-                public void windowClosing(java.awt.event.WindowEvent evt) {
-                    try{
-                        SoftGym.hu.stop();
-                        SoftGym.syd.start();
-                    }
-                    catch(Exception ex){}
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                try {
+                    SoftGym.hu.stop();
+                    SoftGym.syd.start();
+                } catch (Exception ex) {
                 }
-                public void windowOpened(java.awt.event.WindowEvent evt) {
-                    try{
-                        SoftGym.syd.stop();
-                        SoftGym.hu.start();
-                    }
-                    catch(Exception ex){}
+            }
+
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                try {
+                    SoftGym.syd.stop();
+                    SoftGym.hu.start();
+                } catch (Exception ex) {
                 }
+            }
         });
     }
-    
-    public void setTemplate(DPFPTemplate template){
-        this.template=template;
+
+    public void setTemplate(DPFPTemplate template) {
+        this.template = template;
     }
 
     /**
@@ -79,9 +81,9 @@ public class AgregarUsuario extends javax.swing.JFrame {
         setUndecorated(true);
         setResizable(false);
 
-        jPanel2.setBackground(new java.awt.Color(51, 255, 204));
+        jPanel2.setBackground(SoftGym.fondo);
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel2.setCursor(new java.awt.Cursor(java.awt.Cursor.MOVE_CURSOR));
+        jPanel2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel2.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 jPanel2MouseDragged(evt);
@@ -228,28 +230,28 @@ public class AgregarUsuario extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void agregarCliente(){
-        if(jTextField1.getText().equals("")||jPasswordField1.equals("")){
-            JOptionPane.showMessageDialog(null,"Debe de llenar todos los campos");
-        }
-        else{
-        usadb db= new usadb();
-        db.in_usuario(jTextField1.getText(), jPasswordField1.getText(), jComboBox1.getSelectedItem().toString()); 
-        db.in_HuellaUsuario(template);
-       
-        //db.actualizar("FechaCorte_Clientes", new Object[]{cliente,jDateChooser1.getDate()});
-               
-        dispose();
-        JOptionPane.showMessageDialog(null, "Usuario agregado exitosamente");
-        SoftGym.syd.start();System.out.println("se reinicio SYD");
-        c.setAlwaysOnTop(true);
+    public void agregarCliente() {
+        if (jTextField1.getText().equals("") || jPasswordField1.equals("")) {
+            JOptionPane.showMessageDialog(null, "Debe de llenar todos los campos");
+        } else {
+            usadb db = new usadb();
+            db.in_usuario(jTextField1.getText(), jPasswordField1.getText(), jComboBox1.getSelectedItem().toString());
+            if (template != null) {
+                db.in_HuellaUsuario(template);
+            }
+            dispose();
+            JOptionPane.showMessageDialog(null, "Usuario agregado exitosamente");
+            SoftGym.syd.start();
+            System.out.println("se reinicio SYD");
+            c.setAlwaysOnTop(true);
         }
     }
-    
+
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         dispose();
-        SoftGym.syd.start();System.out.println("se reinicio SYD");
+        SoftGym.syd.start();
+        System.out.println("se reinicio SYD");
         c.setAlwaysOnTop(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -257,56 +259,20 @@ public class AgregarUsuario extends javax.swing.JFrame {
         // TODO add your handling code here:
         agregarCliente();
     }//GEN-LAST:event_jButton3ActionPerformed
- private int x,y;
+    private int x, y;
     private void jPanel2MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseDragged
         // TODO add your handling code here:
-        if(getExtendedState()==NORMAL){
-            Point point = MouseInfo.getPointerInfo().getLocation() ; 
-            setLocation(point.x - x, point.y - y)   ; 
+        if (getExtendedState() == NORMAL) {
+            Point point = MouseInfo.getPointerInfo().getLocation();
+            setLocation(point.x - x, point.y - y);
         }
     }//GEN-LAST:event_jPanel2MouseDragged
 
     private void jPanel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MousePressed
         // TODO add your handling code here:
-        x = evt.getX  ()  ; 
-        y = evt.getY ()  ; 
+        x = evt.getX();
+        y = evt.getY();
     }//GEN-LAST:event_jPanel2MousePressed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AgregarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AgregarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AgregarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AgregarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AgregarUsuario(null).setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton3;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package softgym;
+package Forms;
 
 import Utilidades.usadb;
 import Utilidades.VerticalLabelUI;
@@ -49,7 +49,7 @@ public class PagoClient extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setTitle("Mensualidad");
 
-        jPanel2.setBackground(new java.awt.Color(102, 255, 102));
+        jPanel2.setBackground(SoftGym.fondo);
 
         jLabel3.setFont(new java.awt.Font("Agency FB", 1, 24)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -161,26 +161,24 @@ public class PagoClient extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        usadb db= new usadb();
-        if(SoftGym.prin.IDCliente!=-1){
-            db.in_ingreso(new Date(), "Mensualidad", "Pago Cliente "+SoftGym.prin.jTextField1.getText(), Double.parseDouble(jTextField1.getText()), SoftGym.nombre);//*******
-            int ultimoingreso =db.ObtenerUltimoIngreso();
+        usadb db = new usadb();
+        if (SoftGym.prin.IDCliente != -1) {
+            db.in_ingreso(new Date(), "Mensualidad", "Pago Cliente " + SoftGym.prin.jTextField1.getText(), Double.parseDouble(jTextField1.getText()), SoftGym.nombre);//*******
+            int ultimoingreso = db.ObtenerUltimoIngreso();
             db.in_historialClientes(ultimoingreso, SoftGym.prin.IDCliente);//Falta obtener el idcliente
-            db.actualizar("FechaCorte_Clientes", new Object[]{SoftGym.prin.IDCliente,jDateChooser1.getDate()});//Falta obtener el idcliente
+            db.actualizar("FechaCorte_Clientes", new Object[]{SoftGym.prin.IDCliente, jDateChooser1.getDate()});//Falta obtener el idcliente
             dispose();
             SoftGym.prin.BusquedaCompleta(SoftGym.prin.IDCliente);
-        }
-        else{
+        } else {
             JOptionPane.showMessageDialog(this, "Se debe loguear un cliente primero");
         }
-        
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

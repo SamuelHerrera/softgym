@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package softgym;
+package Forms;
 
 import Utilidades.generar_conexion;
 import Utilidades.usadb;
@@ -35,31 +35,33 @@ public class EditarCliente extends javax.swing.JFrame {
     /**
      * Creates new form AgregarCliente
      */
-    private DPFPTemplate templatecambio=null;
-    private Image imagen=null;    
+    private DPFPTemplate templatecambio = null;
+    private Image imagen = null;
+
     public EditarCliente() {
         initComponents();
         jLabel1.setUI(new VerticalLabelUI(false));
         addWindowListener(new java.awt.event.WindowAdapter() {
-                public void windowClosing(java.awt.event.WindowEvent evt) {
-                    try{
-                        SoftGym.hu.stop();
-                        SoftGym.syd.start();
-                    }
-                    catch(Exception ex){}
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                try {
+                    SoftGym.hu.stop();
+                    SoftGym.syd.start();
+                } catch (Exception ex) {
                 }
-                public void windowOpened(java.awt.event.WindowEvent evt) {
-                    try{
-                        SoftGym.syd.stop();
-                        SoftGym.hu.start();
-                    }
-                    catch(Exception ex){}
+            }
+
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                try {
+                    SoftGym.syd.stop();
+                    SoftGym.hu.start();
+                } catch (Exception ex) {
                 }
+            }
         });
     }
-    
-    public void setTemplate(DPFPTemplate template){
-        this.templatecambio=template;
+
+    public void setTemplate(DPFPTemplate template) {
+        this.templatecambio = template;
     }
 
     /**
@@ -91,9 +93,9 @@ public class EditarCliente extends javax.swing.JFrame {
         setUndecorated(true);
         setResizable(false);
 
-        jPanel2.setBackground(new java.awt.Color(51, 255, 204));
+        jPanel2.setBackground(SoftGym.fondo);
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel2.setCursor(new java.awt.Cursor(java.awt.Cursor.MOVE_CURSOR));
+        jPanel2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel2.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 jPanel2MouseDragged(evt);
@@ -268,164 +270,126 @@ public class EditarCliente extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
-    public void DesplegarCliente(String nombre, String Telefono, String email, Image imagen){
-        try{
+
+    public void DesplegarCliente(String nombre, String Telefono, String email, Image imagen) {
+        try {
             jTextField1.setText(nombre);
-            jTextField2.setText(""+Telefono);
+            jTextField2.setText("" + Telefono);
             jTextField3.setText(email);
-            this.imagen=imagen;
+            this.imagen = imagen;
             jLabel6.setIcon(new ImageIcon(imagen.getScaledInstance(126, 161, Image.SCALE_SMOOTH)));
             jLabel3.setText("Sin actualizar");
+        } catch (Exception ex) {
         }
-        catch(Exception ex){}
     }
-    
-    public void agregarCliente(){
-        if(jTextField1.getText().equals("")||jTextField2.getText().equals("")||jTextField3.getText().equals("")){
-            JOptionPane.showMessageDialog(this,"Debe de llenar todos los campos");
-        }
-        else{
-        usadb db= new usadb();
-        
-        db.actualizar("Cliente", new Object[]{
-            SoftGym.prin.IDCliente,
-            jTextField1.getText(),
-            jTextField2.getText(),
-            jTextField3.getText()
-        });
-        
-        db.actualizar("FotoCliente", new Object[]{SoftGym.prin.IDCliente,new ImageSerializable(imagen)});
-        if(this.templatecambio!=null){
-            
-            try {
-               Connection c=generar_conexion.getConnection();
-               PreparedStatement st;
-               st = c.prepareStatement("DELETE FROM HuellaCliente WHERE idcliente = ?"); 
-               st.setInt(1, SoftGym.prin.IDCliente);        
-               if(st.executeUpdate()==1){
-                   System.out.println("eliminio huella para actualizar");     				         
-               }
+
+    public void agregarCliente() {
+        if (jTextField1.getText().equals("") || jTextField2.getText().equals("") || jTextField3.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Debe de llenar todos los campos");
+        } else {
+            usadb db = new usadb();
+
+            db.actualizar("Cliente", new Object[]{
+                SoftGym.prin.IDCliente,
+                jTextField1.getText(),
+                jTextField2.getText(),
+                jTextField3.getText()
+            });
+
+            db.actualizar("FotoCliente", new Object[]{SoftGym.prin.IDCliente, new ImageSerializable(imagen)});
+            if (this.templatecambio != null) {
+
+                try {
+                    Connection c = generar_conexion.getConnection();
+                    PreparedStatement st;
+                    st = c.prepareStatement("DELETE FROM HuellaCliente WHERE idcliente = ?");
+                    st.setInt(1, SoftGym.prin.IDCliente);
+                    if (st.executeUpdate() == 1) {
+                        System.out.println("eliminio huella para actualizar");
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();  //capturas alguna excepcion de la base de datos
+                }
+
+                db.in_HuellaCliente(SoftGym.prin.IDCliente, templatecambio);
+                //db.actualizar("HuellaCliente", new Object[]{SoftGym.prin.IDCliente,this.templatecambio});
             }
-           catch (Exception ex) {
-               ex.printStackTrace();  //capturas alguna excepcion de la base de datos
-           }
-            
-            
-            db.in_HuellaCliente(SoftGym.prin.IDCliente,templatecambio);
-            //db.actualizar("HuellaCliente", new Object[]{SoftGym.prin.IDCliente,this.templatecambio});
-        }
-        JOptionPane.showMessageDialog(this, "Cliente actualizado exitosamente");
-        
-        dispose();
-        SoftGym.hu.stop();
-        SoftGym.syd.start();System.out.println("se reinicio SYD");
+            JOptionPane.showMessageDialog(this, "Cliente actualizado exitosamente");
+
+            dispose();
+            SoftGym.hu.stop();
+            SoftGym.syd.start();
+            System.out.println("se reinicio SYD");
         }
     }
-    
+
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         dispose();
         SoftGym.hu.stop();
-        SoftGym.syd.start();System.out.println("se reinicio SYD");
+        SoftGym.syd.start();
+        System.out.println("se reinicio SYD");
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         agregarCliente();
-        
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        new Thread(){
+        new Thread() {
             @Override
-            public void run(){
-        try { 
-                Process p = new ProcessBuilder("C:\\softgym\\StillCap.exe","/device:1","/clipboard","/delay:1","/resolution:160x120").start(); 
-                p.waitFor();
-                System.out.println("paso por aqui");
-                // Obtiene el Clipboard del sistema
-                            Clipboard cb = Toolkit.getDefaultToolkit().getSystemClipboard();
+            public void run() {
+                try {
+                    Process p = new ProcessBuilder("C:\\softgym\\StillCap.exe", "/device:1", "/clipboard", "/delay:1", "/resolution:160x120").start();
+                    p.waitFor();
+                    System.out.println("paso por aqui");
+                    // Obtiene el Clipboard del sistema
+                    Clipboard cb = Toolkit.getDefaultToolkit().getSystemClipboard();
 
-                            // Obtiene el contenido
-                            Transferable t = cb.getContents(null);
-                            if (t==null) return;
+                    // Obtiene el contenido
+                    Transferable t = cb.getContents(null);
+                    if (t == null) {
+                        return;
+                    }
 
-                            
-                            if (t.isDataFlavorSupported(DataFlavor.imageFlavor)) {
-                                imagen=(Image) t.getTransferData(DataFlavor.imageFlavor);
-                                    jLabel6.setIcon(new ImageIcon(imagen.getScaledInstance(122, 161,Image.SCALE_DEFAULT)));
-                            }
-                
-            } 
-            catch (IOException | InterruptedException | UnsupportedFlavorException ex) {
-              Logger.getLogger(EditarCliente.class.getName()).log(Level.SEVERE, null, ex);
+                    if (t.isDataFlavorSupported(DataFlavor.imageFlavor)) {
+                        imagen = (Image) t.getTransferData(DataFlavor.imageFlavor);
+                        jLabel6.setIcon(new ImageIcon(imagen.getScaledInstance(122, 161, Image.SCALE_DEFAULT)));
+                    }
+
+                } catch (IOException | InterruptedException | UnsupportedFlavorException ex) {
+                    Logger.getLogger(EditarCliente.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-        }
-            }.start();
+        }.start();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyTyped
         // TODO add your handling code here:
-        if(evt.getKeyChar()>=48&&evt.getKeyChar()<=57){
+        if (evt.getKeyChar() >= 48 && evt.getKeyChar() <= 57) {
             //System.out.println("ensdfsdfsdftro");
-        }
-        else{
-           
-                evt.consume();
+        } else {
+
+            evt.consume();
         }
     }//GEN-LAST:event_jTextField2KeyTyped
 
     private void jPanel2MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseDragged
         // TODO add your handling code here:
-        if(getExtendedState()==NORMAL){
-            Point point = MouseInfo.getPointerInfo().getLocation() ; 
-            setLocation(point.x - x, point.y - y)   ; 
+        if (getExtendedState() == NORMAL) {
+            Point point = MouseInfo.getPointerInfo().getLocation();
+            setLocation(point.x - x, point.y - y);
         }
     }//GEN-LAST:event_jPanel2MouseDragged
- private int x,y;
+    private int x, y;
     private void jPanel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MousePressed
         // TODO add your handling code here:
-        x = evt.getX  ()  ; 
-        y = evt.getY ()  ; 
+        x = evt.getX();
+        y = evt.getY();
     }//GEN-LAST:event_jPanel2MousePressed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EditarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EditarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EditarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EditarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new EditarCliente().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

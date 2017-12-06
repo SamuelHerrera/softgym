@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package softgym;
+package Forms;
 
+import Utilidades.SoftGym;
 import Utilidades.usadb;
 import Utilidades.VerticalLabelUI;
-import Utilidades.SoftGym;
 import com.digitalpersona.onetouch.DPFPGlobal;
 import com.digitalpersona.onetouch.DPFPTemplate;
 import java.awt.Color;
@@ -22,10 +22,8 @@ import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.util.Date;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -38,32 +36,34 @@ public class AgregarCliente extends javax.swing.JFrame {
      * Creates new form AgregarCliente
      */
     private DPFPTemplate template;
-    private Image imagen=null; 
-    public static boolean bandera=false;
+    private Image imagen = null;
+    public static boolean bandera = false;
+
     public AgregarCliente() {
         initComponents();
         jDateChooser1.setDate(new Date());
         jLabel1.setUI(new VerticalLabelUI(false));
         addWindowListener(new java.awt.event.WindowAdapter() {
-                public void windowClosing(java.awt.event.WindowEvent evt) {
-                    try{
-                        SoftGym.hu.stop();
-                        SoftGym.syd.start();
-                    }
-                    catch(Exception ex){}
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                try {
+                    SoftGym.hu.stop();
+                    SoftGym.syd.start();
+                } catch (Exception ex) {
                 }
-                public void windowOpened(java.awt.event.WindowEvent evt) {
-                    try{
-                        SoftGym.syd.stop();
-                        SoftGym.hu.start();
-                    }
-                    catch(Exception ex){}
+            }
+
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                try {
+                    SoftGym.syd.stop();
+                    SoftGym.hu.start();
+                } catch (Exception ex) {
                 }
+            }
         });
     }
-    
-    public void setTemplate(DPFPTemplate template){
-        this.template=template;
+
+    public void setTemplate(DPFPTemplate template) {
+        this.template = template;
     }
 
     /**
@@ -99,9 +99,9 @@ public class AgregarCliente extends javax.swing.JFrame {
         setUndecorated(true);
         setResizable(false);
 
-        jPanel2.setBackground(new java.awt.Color(51, 255, 204));
+        jPanel2.setBackground(SoftGym.fondo);
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel2.setCursor(new java.awt.Cursor(java.awt.Cursor.MOVE_CURSOR));
+        jPanel2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel2.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 jPanel2MouseDragged(evt);
@@ -307,207 +307,171 @@ public class AgregarCliente extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void agregarCliente(){
-        if(jTextField1.getText().equals("")){
-            JOptionPane.showMessageDialog(this,"Debes ingresar minimo el nombre");
+    public void agregarCliente() {
+        if (jTextField1.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Debes ingresar minimo el nombre");
             jTextField1.setText("  ");
-        }
-        else{
-            if(jTextField2.getText().equals("")){
-                    jTextField2.setText("  ");
+        } else {
+            if (jTextField2.getText().equals("")) {
+                jTextField2.setText("  ");
             }
-            if(jTextField3.getText().equals("")){
+            if (jTextField3.getText().equals("")) {
                 jTextField3.setText("  ");
             }
-            if(jTextField4.getText().equals("")){
+            if (jTextField4.getText().equals("")) {
                 jTextField4.setText("0");
             }
 
-            usadb db= new usadb();
-            db.in_cliente(jTextField1.getText(), jTextField2.getText(), jTextField3.getText(), new Date()); 
+            usadb db = new usadb();
+            db.in_cliente(jTextField1.getText(), jTextField2.getText(), jTextField3.getText(), new Date());
             db.in_HuellaCliente(template);
-            Object[][] user=db.get_usuario(SoftGym.prin.IDUsuario, "idusuario");
-            db.in_ingreso(new Date(), "Inscripcion", "Suscripcion cliente "+jTextField1.getText(), Double.parseDouble(jTextField4.getText()), SoftGym.nombre);//Falta usuario
-            int ingresos=db.ObtenerUltimoIngreso();
-            int cliente=db.ObtenerUltimoCliente();
-            if(imagen==null){
+            Object[][] user = db.get_usuario(SoftGym.prin.IDUsuario, "idusuario");
+            db.in_ingreso(new Date(), "Inscripcion", "Suscripcion cliente " + jTextField1.getText(), Double.parseDouble(jTextField4.getText()), SoftGym.nombre);//Falta usuario
+            int ingresos = db.ObtenerUltimoIngreso();
+            int cliente = db.ObtenerUltimoCliente();
+            if (imagen == null) {
                 try {
-                    imagen=ImageIO.read(this.getClass().getResource("/Imagenes/usuario.jpg"));
+                    imagen = ImageIO.read(this.getClass().getResource("/Imagenes/usuario.jpg"));
                 } catch (IOException ex) {
                     Logger.getLogger(AgregarCliente.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             db.in_FotoCliente(imagen);
-            if( jDateChooser1.getDate()==null  ){
+            if (jDateChooser1.getDate() == null) {
                 jDateChooser1.setDate(new Date());
             }
             db.in_fechaCorteCliente(cliente, jDateChooser1.getDate());
             db.in_historialClientes(ingresos, cliente);
 
             //db.actualizar("FechaCorte_Clientes", new Object[]{cliente,jDateChooser1.getDate()});
-
             dispose();
             JOptionPane.showMessageDialog(null, "Cliente agregado exitosamente");
             SoftGym.hu.stop();
-            SoftGym.syd.start();System.out.println("se reinicio SYD");
+            SoftGym.syd.start();
+            System.out.println("se reinicio SYD");
         }
     }
-    
+
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         SoftGym.hu.stop();
         dispose();
-        SoftGym.syd.start();System.out.println("se reinicio SYD");
+        SoftGym.syd.start();
+        System.out.println("se reinicio SYD");
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        if(bandera==true){
+        if (bandera == true) {
             agregarCliente();
-            try{
-                SoftGym.hu.stop();System.out.println("se detuvo HU");
-                SoftGym.syd.start();System.out.println("se reinicio SYD");
+            try {
+                SoftGym.hu.stop();
+                System.out.println("se detuvo HU");
+                SoftGym.syd.start();
+                System.out.println("se reinicio SYD");
+            } catch (Exception es) {
             }
-            catch(Exception es){}
-        }
-        else{
+        } else {
             ObjectInputStream ois = null;
             try {
-                ois = new ObjectInputStream(new FileInputStream("c://softgym//FPSam.obj"));
-                byte templateBuffer[] = (byte [])ois.readObject();
+                ois = new ObjectInputStream(new FileInputStream("./FPSam.obj"));
+                byte templateBuffer[] = (byte[]) ois.readObject();
                 template = DPFPGlobal.getTemplateFactory().createTemplate(templateBuffer);
                 agregarCliente();
-                
-                //JOptionPane.showMessageDialog(null,"Imposible agregar al usuario");
             } catch (IOException | ClassNotFoundException ex) {
                 Logger.getLogger(AgregarCliente.class.getName()).log(Level.SEVERE, null, ex);
             } finally {
                 try {
-                    try{
-                        SoftGym.hu.stop();System.out.println("se detuvo HU");
-                        SoftGym.syd.start();System.out.println("se reinicio SYD");
+                    try {
+                        SoftGym.hu.stop();
+                        System.out.println("se detuvo HU");
+                        SoftGym.syd.start();
+                        System.out.println("se reinicio SYD");
+                    } catch (Exception es) {
                     }
-                    catch(Exception es){}
                     ois.close();
-                    
+
                 } catch (IOException ex) {
                     Logger.getLogger(AgregarCliente.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             //SoftGym.hu.stop();System.out.println("se detuvo HU");
-            
-            SoftGym.syd.start();System.out.println("se reinicio SYD");
+
+            SoftGym.syd.start();
+            System.out.println("se reinicio SYD");
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        new Thread(){
+        new Thread() {
             @Override
-            public void run(){
-                try { 
-                        Process p = new ProcessBuilder("C:\\softgym\\StillCap.exe","/clipboard","/delay:3","/device:1","/resolution:160x120").start(); 
-                        p.waitFor();
+            public void run() {
+                try {
+                    Process p = new ProcessBuilder("C:\\softgym\\StillCap.exe", "/clipboard", "/delay:3", "/device:1", "/resolution:160x120").start();
+                    p.waitFor();
 
-                        System.out.println("paso por aqui");
-                        // Obtiene el Clipboard del sistema
-                                    Clipboard cb = Toolkit.getDefaultToolkit().getSystemClipboard();
+                    System.out.println("paso por aqui");
+                    // Obtiene el Clipboard del sistema
+                    Clipboard cb = Toolkit.getDefaultToolkit().getSystemClipboard();
 
-                                    // Obtiene el contenido
-                                    Transferable t = cb.getContents(null);
-                                    if (t==null) return;
-
-                                    // Verifica si una imagen. Si es así, la pone en la 
-                                    // etiqueta.
-                                    if (t.isDataFlavorSupported(DataFlavor.imageFlavor)) {
-                                        imagen=(Image) t.getTransferData(DataFlavor.imageFlavor);
-                                            jLabel6.setIcon(new ImageIcon(imagen.getScaledInstance(122, 161,Image.SCALE_DEFAULT)));
-                                    }
-
-
-                    } 
-                    catch (IOException | InterruptedException | UnsupportedFlavorException ex) {
-                       // Logger.getLogger(test.class.getName()).log(Level.SEVERE, null, ex);
+                    // Obtiene el contenido
+                    Transferable t = cb.getContents(null);
+                    if (t == null) {
+                        return;
                     }
+
+                    // Verifica si una imagen. Si es así, la pone en la 
+                    // etiqueta.
+                    if (t.isDataFlavorSupported(DataFlavor.imageFlavor)) {
+                        imagen = (Image) t.getTransferData(DataFlavor.imageFlavor);
+                        jLabel6.setIcon(new ImageIcon(imagen.getScaledInstance(122, 161, Image.SCALE_DEFAULT)));
+                    }
+
+                } catch (IOException | InterruptedException | UnsupportedFlavorException ex) {
+                    // Logger.getLogger(test.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-            }.start();
+        }.start();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyTyped
         // TODO add your handling code here:
-        if(evt.getKeyChar()>=48&&evt.getKeyChar()<=57){
+        if (evt.getKeyChar() >= 48 && evt.getKeyChar() <= 57) {
             //System.out.println("ensdfsdfsdftro");
-        }
-        else{
-           
-                evt.consume();
+        } else {
+
+            evt.consume();
         }
     }//GEN-LAST:event_jTextField2KeyTyped
 
     private void jTextField4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyTyped
         // TODO add your handling code here:
-        if(evt.getKeyChar()>=48&&evt.getKeyChar()<=57){
+        if (evt.getKeyChar() >= 48 && evt.getKeyChar() <= 57) {
             //System.out.println("ensdfsdfsdftro");
-        }
-        else{
-           if(evt.getKeyChar()=='.'){
+        } else {
+            if (evt.getKeyChar() == '.') {
                 //entra
-            }
-            else{
+            } else {
                 evt.consume();
             }
         }
     }//GEN-LAST:event_jTextField4KeyTyped
-       private int x,y;
+    private int x, y;
     private void jPanel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MousePressed
         // TODO add your handling code here:
-                // TODO add your handling code here:
-        x = evt.getX  ()  ; 
-        y = evt.getY ()  ; 
+        // TODO add your handling code here:
+        x = evt.getX();
+        y = evt.getY();
     }//GEN-LAST:event_jPanel2MousePressed
 
     private void jPanel2MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseDragged
         // TODO add your handling code here:
-         if(getExtendedState()==NORMAL){
-            Point point = MouseInfo.getPointerInfo().getLocation() ; 
-            setLocation(point.x - x, point.y - y)   ; 
+        if (getExtendedState() == NORMAL) {
+            Point point = MouseInfo.getPointerInfo().getLocation();
+            setLocation(point.x - x, point.y - y);
         }
     }//GEN-LAST:event_jPanel2MouseDragged
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AgregarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AgregarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AgregarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AgregarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AgregarCliente().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

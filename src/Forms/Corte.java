@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package softgym;
+package Forms;
 
 import Utilidades.SoftGym;
 import Utilidades.usapv;
@@ -22,89 +22,84 @@ public class Corte extends javax.swing.JInternalFrame {
      */
     usapv pv = new usapv();
     double totalcaj;
+
     public Corte() {
         initComponents();
         actualizar();
     }
 
-    
-    public void actualizar(){
+    public void actualizar() {
         DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
-                while(jTable1.getRowCount()>0){
+        while (jTable1.getRowCount() > 0) {
             dtm.removeRow(0);
         }
-        Object[][] corte=pv.get_corte2(SoftGym.nombre, "usuario");
-        
-        if(corte!=null){
-            for(int i=0;i<corte.length;i++){
-                dtm.addRow(new Object[]{corte[i][1],corte[i][2],corte[i][3],corte[i][4],corte[i][5]});
+        Object[][] corte = pv.get_corte2(SoftGym.nombre, "usuario");
+
+        if (corte != null) {
+            for (int i = 0; i < corte.length; i++) {
+                dtm.addRow(new Object[]{corte[i][1], corte[i][2], corte[i][3], corte[i][4], corte[i][5]});
             }
             jTable1.setRowSelectionInterval(0, 0);
-        
+
+        }
     }
- }
     double total = 0;
-    public void corte(){
-       Object[][] cortes = pv.get_corte2(SoftGym.nombre, "usuario");
-            
-       if(!jTextField1.getText().equals("")){
-       totalcaj= Double.parseDouble(jTextField1.getText());
-       
-       }
-       else{
-           totalcaj=0;
-       }
-       if(cortes!=null){
-        
-           Object[][] movusu= pv.get_movimientos(SoftGym.nombre,"usuario");
-           System.out.println(""+movusu.length);
-           System.out.println(movusu[0][6]);
-           System.out.println("Fecha corte"+cortes[cortes.length-1][2]);
-        if(movusu!=null){
-            for(int i=0;i<movusu.length;i++){
-                int x= ((Date)movusu[i][6]).compareTo((Date)cortes[cortes.length-1][2]);
-                System.out.println(""+x);
-                if(x>=0){
-                    System.out.println("Por aqui paso");
-                total=total+(double)movusu[i][4];
-                }
-                //JOptionPane.showMessageDialog(this,"No se ha encontrado venta alguna");
-                
-            }
-            pv.in_corte((Date)cortes[cortes.length-1][2], new Date(), totalcaj, total, SoftGym.nombre);
-            actualizar();
+
+    public void corte() {
+        Object[][] cortes = pv.get_corte2(SoftGym.nombre, "usuario");
+
+        if (!jTextField1.getText().equals("")) {
+            totalcaj = Double.parseDouble(jTextField1.getText());
+
+        } else {
+            totalcaj = 0;
         }
-       }
-       else
-       {
-           Date fecha = new Date();
-           fecha.setMonth(0);fecha.setDate(1);fecha.setYear(115);
-           //Object[][] movimientos=pv.get_movimientos(new Object[]{fecha, new Date()}, "fecha");
-         Object[][] movusu= pv.get_movimientos(SoftGym.nombre,"usuario");
-           System.out.println(""+movusu.length);
-           System.out.println("kjhgf");
-        if(movusu!=null){
-            System.out.println(""+movusu.length);
-            System.out.println(""+movusu[0][5]);
-            System.out.println(""+movusu[0][2]);
-            for(int i=0;i<movusu.length;i++){
-                System.out.println("Corte aqui");
-                System.out.println("Por aqui sdfghj");
-                //int in= (cortes.length);
-                int x= ((Date)movusu[i][6]).compareTo(fecha);
-                System.out.println(""+x);
-                if(x>0){
-                total=total+(double)movusu[i][4];
+        if (cortes != null) {
+
+            Object[][] movusu = pv.get_movimientos(SoftGym.nombre, "usuario");
+            System.out.println("" + movusu.length);
+            System.out.println(movusu[0][6]);
+            System.out.println("Fecha corte" + cortes[cortes.length - 1][2]);
+            if (movusu != null) {
+                for (int i = 0; i < movusu.length; i++) {
+                    int x = ((Date) movusu[i][6]).compareTo((Date) cortes[cortes.length - 1][2]);
+                    System.out.println("" + x);
+                    if (x >= 0) {
+                        System.out.println("Por aqui paso");
+                        total = total + (double) movusu[i][4];
+                    }
+                    //JOptionPane.showMessageDialog(this,"No se ha encontrado venta alguna");
+
                 }
-                
+                pv.in_corte((Date) cortes[cortes.length - 1][2], new Date(), totalcaj, total, SoftGym.nombre);
+                actualizar();
             }
-            pv.in_corte(fecha, new Date(), totalcaj, total, SoftGym.nombre);
-            actualizar();
+        } else {
+            Date fecha = new Date();
+            fecha.setMonth(0);
+            fecha.setDate(1);
+            fecha.setYear(115);
+            //Object[][] movimientos=pv.get_movimientos(new Object[]{fecha, new Date()}, "fecha");
+            Object[][] movusu = pv.get_movimientos(SoftGym.nombre, "usuario");
+            if (movusu != null) {
+                for (int i = 0; i < movusu.length; i++) {
+                    System.out.println("Corte aqui");
+                    System.out.println("Por aqui sdfghj");
+                    //int in= (cortes.length);
+                    int x = ((Date) movusu[i][6]).compareTo(fecha);
+                    System.out.println("" + x);
+                    if (x > 0) {
+                        total = total + (double) movusu[i][4];
+                    }
+
+                }
+                pv.in_corte(fecha, new Date(), totalcaj, total, SoftGym.nombre);
+                actualizar();
+            }
+
         }
-           
-       }
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -121,10 +116,12 @@ public class Corte extends javax.swing.JInternalFrame {
         jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel2 = new javax.swing.JLabel();
 
-        jPanel1.setBackground(new java.awt.Color(153, 255, 204));
+        jPanel1.setBackground(SoftGym.fondo);
 
-        jButton1.setText("Corte de caja");
+        jButton1.setText("Agregar Corte de caja");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -159,6 +156,8 @@ public class Corte extends javax.swing.JInternalFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Total en caja:");
 
+        jLabel2.setText("Cortes Realizados:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -166,17 +165,18 @@ public class Corte extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 512, Short.MAX_VALUE)
+                    .addComponent(jSeparator1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextField1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -185,32 +185,29 @@ public class Corte extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton2)
+                        .addComponent(jButton1))
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 438, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 301, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -226,13 +223,14 @@ public class Corte extends javax.swing.JInternalFrame {
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables

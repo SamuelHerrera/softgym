@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package softgym;
+package Forms;
 
 import Utilidades.SoftGym;
 import javax.swing.JFileChooser;
@@ -19,40 +19,38 @@ public class ChangeFondo extends javax.swing.JDialog {
     /**
      * Creates new form ChangeFondo
      */
-    
     JFileChooser chooser = new JFileChooser();
     SoftGym soft = new SoftGym();
     int returnVal;
-    
+
     public ChangeFondo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
-            "JPG Images", "jpg");
+                "JPG Images", "jpg");
 
         chooser.setFileFilter(filter);
-        returnVal = 
-                chooser.showOpenDialog(this);
+        returnVal
+                = chooser.showOpenDialog(this);
         Read();
     }
-    
-    
-    public void Read(){
+
+    public void Read() {
         soft.leer();
-        
-        if(returnVal == JFileChooser.APPROVE_OPTION) {
-           //System.out.println("You chose to open this file: " +
-           //     chooser.getSelectedFile().getName()+"----"+chooser.getSelectedFile().getAbsolutePath());
-           soft.Escribir(chooser.getSelectedFile().getAbsolutePath(), soft.minimizar,soft.ajustes,soft.reportes,soft.ncamara,soft.correo,soft.horaenviar);
-           dispose();
-           JOptionPane.showMessageDialog(this, "Fondo Cambiado Exitosamente\nReinicie el programa para ver los cambios");
-           
-        }
-        else{
+
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            //System.out.println("You chose to open this file: " +
+            //     chooser.getSelectedFile().getName()+"----"+chooser.getSelectedFile().getAbsolutePath());
+            soft.Escribir(chooser.getSelectedFile().getAbsolutePath(), soft.minimizar, soft.ajustes, soft.reportes, soft.ncamara, soft.correo, soft.horaenviar);
+            dispose();
+            JOptionPane.showMessageDialog(this, "Fondo Cambiado Exitosamente\nReinicie el programa para ver los cambios");
+
+        } else {
             dispose();
         }
-        
+
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -91,48 +89,6 @@ public class ChangeFondo extends javax.swing.JDialog {
     private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jFileChooser1ActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ChangeFondo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ChangeFondo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ChangeFondo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ChangeFondo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                ChangeFondo dialog = new ChangeFondo(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFileChooser jFileChooser1;

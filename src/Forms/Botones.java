@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package softgym;
+package Forms;
 
 import Utilidades.usadb;
 import Utilidades.InscripcionHuella_Todos;
@@ -102,12 +102,16 @@ public class Botones extends javax.swing.JPanel {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jButton8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jButton7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
-            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jButton10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jButton7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -149,8 +153,12 @@ public class Botones extends javax.swing.JPanel {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -180,81 +188,86 @@ public class Botones extends javax.swing.JPanel {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        PagoClient p=new PagoClient();
+        PagoClient p = new PagoClient();
         p.setVisible(true);
         Principal.jDesktopPane1.add(p);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        AgregarCliente ae= new AgregarCliente();
+        AgregarCliente ae = new AgregarCliente();
         ae.setLocationRelativeTo(null);
-        SoftGym.syd.stop(); System.out.println("se detuvo SYD");
-        SoftGym.hu=new InscripcionHuella_Todos(ae);System.out.println("se creo hu");
-        
-        
+        SoftGym.syd.stop();
+        System.out.println("se detuvo SYD");
+        SoftGym.hu = new InscripcionHuella_Todos(ae);
+        System.out.println("se creo hu");
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        AgregarEntrada ag= new AgregarEntrada();
+        AgregarEntrada ag = new AgregarEntrada();
         Principal.jDesktopPane1.add(ag);
         ag.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        AgregarSalid as= new AgregarSalid();
+        AgregarSalid as = new AgregarSalid();
         Principal.jDesktopPane1.add(as);
         as.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-        usadb db= new usadb();
-        
-        if(SoftGym.prin.IDCliente==(-1)){
-            Buscar b=new Buscar(new javax.swing.JFrame(),true);
+        usadb db = new usadb();
+
+        if (SoftGym.prin.IDCliente == (-1)) {
+            Buscar b = new Buscar(new javax.swing.JFrame(), true);
             b.setLocationRelativeTo(null);
             b.setVisible(true);
-            Object[][] cliente = db.get_cliente(SoftGym.prin.IDCliente,"idcliente");
-            Image fotocliente = db.get_fotocliente( SoftGym.prin.IDCliente, "idcliente");
-            EditarCliente ac= new EditarCliente();
+            Object[][] cliente = db.get_cliente(SoftGym.prin.IDCliente, "idcliente");
+            Image fotocliente = db.get_fotocliente(SoftGym.prin.IDCliente, "idcliente");
+            EditarCliente ac = new EditarCliente();
             ac.setLocationRelativeTo(null);
-            ac.DesplegarCliente((String)cliente[0][1], (String)cliente[0][2], (String)cliente[0][3], fotocliente);
-            ac.setVisible(true);   
-            SoftGym.syd.stop(); System.out.println("se detuvo SYD");
-            SoftGym.hu=new InscripcionHuella_Todos(ac);System.out.println("se creo hu");
-        }
-        else{
-            Object[][] cliente = db.get_cliente(SoftGym.prin.IDCliente,"idcliente");
-            Image fotocliente = db.get_fotocliente( SoftGym.prin.IDCliente, "idcliente");
-            EditarCliente ac= new EditarCliente();
+            ac.DesplegarCliente((String) cliente[0][1], (String) cliente[0][2], (String) cliente[0][3], fotocliente);
+            ac.setVisible(true);
+            SoftGym.syd.stop();
+            System.out.println("se detuvo SYD");
+            SoftGym.hu = new InscripcionHuella_Todos(ac);
+            System.out.println("se creo hu");
+        } else {
+            Object[][] cliente = db.get_cliente(SoftGym.prin.IDCliente, "idcliente");
+            Image fotocliente = db.get_fotocliente(SoftGym.prin.IDCliente, "idcliente");
+            EditarCliente ac = new EditarCliente();
             ac.setLocationRelativeTo(null);
-            ac.DesplegarCliente((String)cliente[0][1], (String)cliente[0][2], (String)cliente[0][3], fotocliente);
-            ac.setVisible(true);   
-            SoftGym.syd.stop(); System.out.println("se detuvo SYD");
-            SoftGym.syd0.stop();System.out.println("se detuvo SYD0");
-            SoftGym.hu=new InscripcionHuella_Todos(ac);System.out.println("se creo hu");
-                     
+            ac.DesplegarCliente((String) cliente[0][1], (String) cliente[0][2], (String) cliente[0][3], fotocliente);
+            ac.setVisible(true);
+            SoftGym.syd.stop();
+            System.out.println("se detuvo SYD");
+            SoftGym.syd0.stop();
+            System.out.println("se detuvo SYD0");
+            SoftGym.hu = new InscripcionHuella_Todos(ac);
+            System.out.println("se creo hu");
+
         }
-        
+
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
-        HistorialPagoClientes hpc= new HistorialPagoClientes();
+        HistorialPagoClientes hpc = new HistorialPagoClientes();
         Principal.jDesktopPane1.add(hpc);
         hpc.setVisible(true);
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         // TODO add your handling code here:
-        
-        AsistenciaDiaria ad=new AsistenciaDiaria();
+
+        AsistenciaDiaria ad = new AsistenciaDiaria();
         ad.setVisible(true);
         SoftGym.prin.jDesktopPane1.add(ad);
-        
+
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
@@ -264,7 +277,6 @@ public class Botones extends javax.swing.JPanel {
         pv.setVisible(true);
         Principal.jDesktopPane1.add(pv);
     }//GEN-LAST:event_jButton10ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

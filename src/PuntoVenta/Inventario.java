@@ -9,7 +9,7 @@ import Utilidades.SoftGym;
 import Utilidades.usapv;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import softgym.Principal;
+import Forms.Principal;
 
 /**
  *
@@ -61,7 +61,7 @@ public class Inventario extends javax.swing.JInternalFrame {
         setResizable(true);
         setTitle("Inventario");
 
-        jPanel1.setBackground(new java.awt.Color(153, 255, 204));
+        jPanel1.setBackground(SoftGym.fondo);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -253,118 +253,112 @@ public class Inventario extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         jTextField1.setEnabled(true);
         Object[][] datos = pv.get_inventario(jTextField1.getText(), "codigobarra");
-        pv.actualizar("Inventario", new Object[]{(int)datos[0][0],jTextField1.getText(), jTextField2.getText(),
-                    Double.parseDouble(jTextField5.getText()),
-                    Double.parseDouble(jTextField3.getText()),
-                    Double.parseDouble(jTextField4.getText())});
+        pv.actualizar("Inventario", new Object[]{(int) datos[0][0], jTextField1.getText(), jTextField2.getText(),
+            Double.parseDouble(jTextField5.getText()),
+            Double.parseDouble(jTextField3.getText()),
+            Double.parseDouble(jTextField4.getText())});
         jTextField1.setText("");
-                jTextField2.setText("");
-                jTextField3.setText("");
-                jTextField4.setText("");
-                jTextField5.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jTextField4.setText("");
+        jTextField5.setText("");
         actualizartabla();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
-        if(evt.getClickCount()==2){
-            try{
-             jTextField1.setEnabled(false);
-            String aux=jTable1.getValueAt(jTable1.getSelectedRow(),0).toString();
-            Object[][] producto = pv.get_inventario(aux, "codigobarra");
-            //SoftGym.prin.pv.agregarcarrito(aux, 1);
-            jTextField1.setText(""+producto[0][1]);
-            jTextField2.setText(""+producto[0][2]);
-            jTextField5.setText(""+producto[0][3]);
-            jTextField3.setText(""+producto[0][4]);
-            jTextField4.setText(""+producto[0][5]);
-            
-        }
-        catch(Exception ex){
-            ex.printStackTrace();
-        }
+        if (evt.getClickCount() == 2) {
+            try {
+                jTextField1.setEnabled(false);
+                String aux = jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString();
+                Object[][] producto = pv.get_inventario(aux, "codigobarra");
+                //SoftGym.prin.pv.agregarcarrito(aux, 1);
+                jTextField1.setText("" + producto[0][1]);
+                jTextField2.setText("" + producto[0][2]);
+                jTextField5.setText("" + producto[0][3]);
+                jTextField3.setText("" + producto[0][4]);
+                jTextField4.setText("" + producto[0][5]);
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        if(jPanel2.isVisible()){
+        if (jPanel2.isVisible()) {
             jPanel2.setVisible(false);
-        }
-        else{
+        } else {
             jPanel2.setVisible(true);
         }
-        
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        if(jTable1.getSelectedRow()!=-1){
-            
-            String aux=jTable1.getValueAt(jTable1.getSelectedRow(),0).toString();
-            String descripcion=jTable1.getValueAt(jTable1.getSelectedRow(),1).toString();
-            IngresarInventario in= new IngresarInventario();
+        if (jTable1.getSelectedRow() != -1) {
+
+            String aux = jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString();
+            String descripcion = jTable1.getValueAt(jTable1.getSelectedRow(), 1).toString();
+            IngresarInventario in = new IngresarInventario();
             in.obtenerProd(aux, descripcion);
             in.setVisible(true);
             Principal.jDesktopPane1.add(in);
-        }
-        else{
+        } else {
             JOptionPane.showMessageDialog(this, "Selecciona un producto primero!");
         }
     }//GEN-LAST:event_jButton3ActionPerformed
-private Object[][] productos=null;
-    usapv pv= new usapv();
-    private void actualizartabla(){
-        DefaultTableModel dtm=(DefaultTableModel) jTable1.getModel();
-        while(jTable1.getRowCount()>0){
-            dtm.removeRow(0);
-        }  
-        Object[][] datos=pv.getAll_Inventario();
-        
-        for(int i=0;datos!=null&&i<datos.length;i++){
-                
-                //Object[][] consulta=pv.get_inventario(datos[i][0].toString(),"idInventario");
-                            
-                dtm.addRow( new Object[]{datos[i][1],datos[i][2],datos[i][3],datos[i][4],datos[i][5]});
+    private Object[][] productos = null;
+    usapv pv = new usapv();
 
-        } 
-    }
-    
-    private void ingresarprod(){
-        boolean bandera=false;
-        if(jTextField1.getText().equals("")||jTextField2.getText().equals("")||jTextField3.getText().equals("")||jTextField4.getText().equals("")||jTextField5.getText().equals("")){
-            JOptionPane.showMessageDialog(this, "Uno o mas campos se encuentran vacíos");
+    private void actualizartabla() {
+        DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
+        while (jTable1.getRowCount() > 0) {
+            dtm.removeRow(0);
         }
-        else{
+        Object[][] datos = pv.getAll_Inventario();
+
+        for (int i = 0; datos != null && i < datos.length; i++) {
+
+            //Object[][] consulta=pv.get_inventario(datos[i][0].toString(),"idInventario");
+            dtm.addRow(new Object[]{datos[i][1], datos[i][2], datos[i][3], datos[i][4], datos[i][5]});
+
+        }
+    }
+
+    private void ingresarprod() {
+        boolean bandera = false;
+        if (jTextField1.getText().equals("") || jTextField2.getText().equals("") || jTextField3.getText().equals("") || jTextField4.getText().equals("") || jTextField5.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Uno o mas campos se encuentran vacíos");
+        } else {
             Object[][] inven = pv.getAll_Inventario();
             //for(int i =0; inven!=null&&i<inven.length;i++){
-            for(int i=0;inven!=null&&i<inven.length;i++){
-                if(inven[i][1].equals(jTextField1.getText())){
-                    bandera=true;
-                }
-                else{
-                    bandera=false;
+            for (int i = 0; inven != null && i < inven.length; i++) {
+                if (inven[i][1].equals(jTextField1.getText())) {
+                    bandera = true;
+                } else {
+                    bandera = false;
                 }
             }
-                if(bandera==false){
-                    pv.in_inventario(jTextField1.getText(), jTextField2.getText(), Double.parseDouble(jTextField5.getText()), 
-                    Double.parseDouble(jTextField3.getText()), Double.parseDouble(jTextField4.getText()));
+            if (bandera == false) {
+                pv.in_inventario(jTextField1.getText(), jTextField2.getText(), Double.parseDouble(jTextField5.getText()),
+                        Double.parseDouble(jTextField3.getText()), Double.parseDouble(jTextField4.getText()));
                 jTextField1.setText("");
                 jTextField2.setText("");
                 jTextField3.setText("");
                 jTextField4.setText("");
                 jTextField5.setText("");
-                }
-                else{
+            } else {
                 JOptionPane.showMessageDialog(this, "El producto ya existe en el inventario");
                 jTextField1.setText("");
                 jTextField2.setText("");
                 jTextField3.setText("");
                 jTextField4.setText("");
                 jTextField5.setText("");
-                }
+            }
             //}
-            
+
         }
     }
 

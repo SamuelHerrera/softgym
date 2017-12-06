@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package softgym;
+package Forms;
 
 import Utilidades.usadb;
 import java.util.Date;
@@ -23,22 +23,25 @@ public class AsistenciaDiaria extends javax.swing.JInternalFrame {
         desplegar();
     }
 
-    
-    public void desplegar(){
-        DefaultTableModel dtm=(DefaultTableModel) jTable1.getModel();
-        
-        usadb  db=new usadb();
-        Date inicio=new Date();    inicio.setHours(0);inicio.setMinutes(0);
-        
-        Date termino=new Date();    termino.setDate(inicio.getDate()+1);
-        Object[][] flujo=db.get_flujoDiarioClientes(new Object[]{inicio,termino  },"fechahora");
-        
-        for(int i=flujo.length-1;flujo!=null&&i>=0;i--){
-            Object[][]cliente=db.get_cliente(flujo[i][2], "idcliente");
-            dtm.addRow(new Object[]{     flujo[i][2],   cliente[0][1]  , ((Date)flujo[i][1]).toLocaleString().substring(11, 18)   });
+    public void desplegar() {
+        DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
+
+        usadb db = new usadb();
+        Date inicio = new Date();
+        inicio.setHours(0);
+        inicio.setMinutes(0);
+
+        Date termino = new Date();
+        termino.setDate(inicio.getDate() + 1);
+        Object[][] flujo = db.get_flujoDiarioClientes(new Object[]{inicio, termino}, "fechahora");
+
+        for (int i = flujo.length - 1; flujo != null && i >= 0; i--) {
+            Object[][] cliente = db.get_cliente(flujo[i][2], "idcliente");
+            dtm.addRow(new Object[]{flujo[i][2], cliente[0][1], ((Date) flujo[i][1]).toLocaleString().substring(11, 18)});
         }
-        
+
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -50,12 +53,11 @@ public class AsistenciaDiaria extends javax.swing.JInternalFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
 
         setClosable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("Tabla Diaria de asistencia");
+        setTitle("Asistencia del dia");
         setToolTipText("");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -75,9 +77,11 @@ public class AsistenciaDiaria extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane1.setViewportView(jTable1);
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel1.setText("Asistencia del dia");
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setMinWidth(50);
+            jTable1.getColumnModel().getColumn(0).setPreferredWidth(50);
+            jTable1.getColumnModel().getColumn(0).setMaxWidth(50);
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -85,29 +89,21 @@ public class AsistenciaDiaria extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 554, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 591, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables

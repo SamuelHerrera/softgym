@@ -24,7 +24,7 @@ import java.io.IOException;
 import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import softgym.Principal;
+import Forms.Principal;
 
 public class LeerHuella_Login{
     

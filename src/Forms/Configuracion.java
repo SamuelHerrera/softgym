@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package softgym;
+package Forms;
 
 import PuntoVenta.Inventario;
 import Utilidades.InscripcionHuella_Todos;
@@ -20,34 +20,35 @@ import javax.swing.JOptionPane;
  *
  * @author Erick
  */
-public class Configuracion extends javax.swing.JFrame{
+public class Configuracion extends javax.swing.JFrame {
 
     /**
      * Creates new form Configuracion
      */
     SoftGym prop = new SoftGym();
+
     public Configuracion() {
         initComponents();
-         try{
-                ObjectInputStream entrada=new ObjectInputStream(new FileInputStream("ddns.obj"));
-                jTextField1.setText((String)entrada.readObject());
-                entrada.close();
-            }
-        catch(Exception ex){}
+        try {
+            ObjectInputStream entrada = new ObjectInputStream(new FileInputStream("ddns.obj"));
+            jTextField1.setText((String) entrada.readObject());
+            entrada.close();
+        } catch (Exception ex) {
+        }
         prop.leer();
-            System.out.println(prop.direccion);
-           if(prop.minimizar.equals("true")){
-               jCheckBox1.setSelected(true);
-           }
-           if(prop.ajustes.equals("true")){
-               jCheckBox2.setSelected(true);
-           }
-           if(prop.reportes.equals("true")){
-               jCheckBox3.setSelected(true);
-           }
-           jTextField2.setText(prop.ncamara);
-           jTextField3.setText(prop.correo);
-           jTextField4.setText(prop.horaenviar);
+        System.out.println(prop.direccion);
+        if (prop.minimizar.equals("true")) {
+            jCheckBox1.setSelected(true);
+        }
+        if (prop.ajustes.equals("true")) {
+            jCheckBox2.setSelected(true);
+        }
+        if (prop.reportes.equals("true")) {
+            jCheckBox3.setSelected(true);
+        }
+        jTextField2.setText(prop.ncamara);
+        jTextField3.setText(prop.correo);
+        jTextField4.setText(prop.horaenviar);
     }
 
     /**
@@ -90,7 +91,7 @@ public class Configuracion extends javax.swing.JFrame{
         setAlwaysOnTop(true);
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(153, 255, 204));
+        jPanel1.setBackground(SoftGym.fondo);
 
         jLabel1.setBackground(new java.awt.Color(0, 0, 0));
         jLabel1.setFont(new java.awt.Font("Agency FB", 0, 24)); // NOI18N
@@ -118,9 +119,9 @@ public class Configuracion extends javax.swing.JFrame{
             }
         });
 
-        jPanel2.setBackground(new java.awt.Color(153, 255, 204));
+        jPanel2.setBackground(SoftGym.fondo);
 
-        jCheckBox1.setBackground(new java.awt.Color(153, 255, 204));
+        jCheckBox1.setBackground(SoftGym.fondo);
         jCheckBox1.setText("<html>\nHabilitar la funcion de minimizar/maximizar<br>\n/cerrar con huella\n</html>");
         jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -144,9 +145,9 @@ public class Configuracion extends javax.swing.JFrame{
                 .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jPanel3.setBackground(new java.awt.Color(153, 255, 204));
+        jPanel3.setBackground(SoftGym.fondo);
 
-        jCheckBox2.setBackground(new java.awt.Color(153, 255, 204));
+        jCheckBox2.setBackground(SoftGym.fondo);
         jCheckBox2.setText("<html>\nHabilitar la opción de <br>\najustes para usuarios<br> normales\n</html>");
         jCheckBox2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -170,9 +171,9 @@ public class Configuracion extends javax.swing.JFrame{
                 .addComponent(jCheckBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jPanel4.setBackground(new java.awt.Color(153, 255, 204));
+        jPanel4.setBackground(SoftGym.fondo);
 
-        jCheckBox3.setBackground(new java.awt.Color(153, 255, 204));
+        jCheckBox3.setBackground(SoftGym.fondo);
         jCheckBox3.setText("<html>Habilitar la opción de <br>reportes para usuarios<br> normales\n</htm>");
         jCheckBox3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -342,135 +343,91 @@ public class Configuracion extends javax.swing.JFrame{
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         this.setAlwaysOnTop(false);
-        SoftGym.syd.stop(); System.out.println("se detuvo SYD");
-        SoftGym.hu=new InscripcionHuella_Todos(new AgregarUsuario(this));System.out.println("se creo hu");
+        SoftGym.syd.stop();
+        System.out.println("se detuvo SYD");
+        SoftGym.hu = new InscripcionHuella_Todos(new AgregarUsuario(this));
+        System.out.println("se creo hu");
         //this.setAlwaysOnTop(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-            EditarEliminarUsuario eeu = new EditarEliminarUsuario();
-            eeu.setLocationRelativeTo(null);
-            eeu.setVisible(true);
-            
-            dispose();
+        EditarEliminarUsuario eeu = new EditarEliminarUsuario();
+        eeu.setLocationRelativeTo(null);
+        eeu.setVisible(true);
+
+        dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-       
-        ChangeFondo CF = new ChangeFondo(this,true);
-       
-       
+
+        ChangeFondo CF = new ChangeFondo(this, true);
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-       
-        try{
-                ObjectOutputStream salida=new ObjectOutputStream(new FileOutputStream("ddns.obj"));
-                salida.writeObject(jTextField1.getText());
-                salida.close();
-                JOptionPane.showMessageDialog(this,"DDNS guardado con exito");
+
+        try {
+            ObjectOutputStream salida = new ObjectOutputStream(new FileOutputStream("ddns.obj"));
+            salida.writeObject(jTextField1.getText());
+            salida.close();
+            JOptionPane.showMessageDialog(this, "DDNS guardado con exito");
+        } catch (Exception ex) {
         }
-        catch(Exception ex){}
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
         prop.leer();
-          prop.Escribir(prop.direccion,prop.minimizar,prop.ajustes,prop.reportes,jTextField2.getText(),prop.correo,prop.horaenviar);
+        prop.Escribir(prop.direccion, prop.minimizar, prop.ajustes, prop.reportes, jTextField2.getText(), prop.correo, prop.horaenviar);
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
         // TODO add your handling code here:
         prop.leer();
-        if(jCheckBox1.isSelected()){
-          prop.Escribir(prop.direccion,"true",prop.ajustes,prop.reportes,prop.ncamara,prop.correo,prop.horaenviar);
-        }
-        else{
-            prop.Escribir(prop.direccion,"false",prop.ajustes,prop.reportes,prop.ncamara,prop.correo,prop.horaenviar);
+        if (jCheckBox1.isSelected()) {
+            prop.Escribir(prop.direccion, "true", prop.ajustes, prop.reportes, prop.ncamara, prop.correo, prop.horaenviar);
+        } else {
+            prop.Escribir(prop.direccion, "false", prop.ajustes, prop.reportes, prop.ncamara, prop.correo, prop.horaenviar);
         }
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
         // TODO add your handling code here:
         prop.leer();
-        if(jCheckBox2.isSelected()){
-          prop.Escribir(prop.direccion,prop.minimizar,"true",prop.reportes,prop.ncamara,prop.correo,prop.horaenviar);
-        }
-        else{
-            prop.Escribir(prop.direccion,prop.minimizar,"false",prop.reportes,prop.ncamara,prop.correo,prop.horaenviar);
+        if (jCheckBox2.isSelected()) {
+            prop.Escribir(prop.direccion, prop.minimizar, "true", prop.reportes, prop.ncamara, prop.correo, prop.horaenviar);
+        } else {
+            prop.Escribir(prop.direccion, prop.minimizar, "false", prop.reportes, prop.ncamara, prop.correo, prop.horaenviar);
         }
     }//GEN-LAST:event_jCheckBox2ActionPerformed
 
     private void jCheckBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox3ActionPerformed
         // TODO add your handling code here:
         prop.leer();
-        if(jCheckBox3.isSelected()){
-          prop.Escribir(prop.direccion,prop.minimizar,prop.ajustes,"true",prop.ncamara,prop.correo,prop.horaenviar);
-        }
-        else{
-            prop.Escribir(prop.direccion,prop.minimizar,prop.ajustes,"false",prop.ncamara,prop.correo,prop.horaenviar);
+        if (jCheckBox3.isSelected()) {
+            prop.Escribir(prop.direccion, prop.minimizar, prop.ajustes, "true", prop.ncamara, prop.correo, prop.horaenviar);
+        } else {
+            prop.Escribir(prop.direccion, prop.minimizar, prop.ajustes, "false", prop.ncamara, prop.correo, prop.horaenviar);
         }
     }//GEN-LAST:event_jCheckBox3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        
-       prop.leer();
-        prop.Escribir(prop.direccion,prop.minimizar,prop.ajustes,prop.reportes,prop.ncamara,jTextField3.getText(),prop.horaenviar);
-      
+
+        prop.leer();
+        prop.Escribir(prop.direccion, prop.minimizar, prop.ajustes, prop.reportes, prop.ncamara, jTextField3.getText(), prop.horaenviar);
+
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         prop.leer();
-        prop.Escribir(prop.direccion,prop.minimizar,prop.ajustes,prop.reportes,prop.ncamara,prop.correo,jTextField4.getText());
-        
+        prop.Escribir(prop.direccion, prop.minimizar, prop.ajustes, prop.reportes, prop.ncamara, prop.correo, jTextField4.getText());
+
     }//GEN-LAST:event_jButton5ActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Configuracion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Configuracion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Configuracion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Configuracion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                Configuracion dialog = new Configuracion();
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

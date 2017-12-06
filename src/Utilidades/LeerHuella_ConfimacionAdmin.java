@@ -25,7 +25,7 @@ import java.awt.Image;
 import java.io.IOException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import softgym.VentanaMinimizar;
+import Forms.VentanaMinimizar;
 
 public class LeerHuella_ConfimacionAdmin{
     

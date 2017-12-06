@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package softgym;
+package Forms;
 
+import Utilidades.SoftGym;
 import Utilidades.VerticalLabelUI;
 import java.awt.Color;
 import javax.swing.SwingConstants;
@@ -23,7 +24,7 @@ public class Concentrados extends javax.swing.JInternalFrame {
         jLabel1.setUI(new VerticalLabelUI(false));
         jTabbedPane1.add(new PanelIngresos1());
         jTabbedPane1.add(new PanelEgresos());
-        
+
     }
 
     /**
@@ -46,7 +47,7 @@ public class Concentrados extends javax.swing.JInternalFrame {
         setTitle("Ingresos - Egresos - Asistencia");
         setMinimumSize(new java.awt.Dimension(700, 450));
 
-        jPanel1.setBackground(new java.awt.Color(153, 255, 204));
+        jPanel1.setBackground(SoftGym.fondo);
 
         jLabel1.setFont(new java.awt.Font("Agency FB", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -82,7 +83,6 @@ public class Concentrados extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;

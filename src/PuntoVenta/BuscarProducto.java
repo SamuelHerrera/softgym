@@ -19,26 +19,28 @@ public class BuscarProducto extends javax.swing.JInternalFrame {
     /**
      * Creates new form BuscarProducto1
      */
-     Object [][] productos;
-    usapv pv= new usapv();
+    Object[][] productos;
+    usapv pv = new usapv();
+
     public BuscarProducto() {
         initComponents();
     }
 
-        public void actualizartabla(){
-        DefaultTableModel dtm=(DefaultTableModel) jTable2.getModel();
-        while(jTable2.getRowCount()>0){
+    public void actualizartabla() {
+        DefaultTableModel dtm = (DefaultTableModel) jTable2.getModel();
+        while (jTable2.getRowCount() > 0) {
             dtm.removeRow(0);
         }
-        
-        if(productos!=null&&productos.length>0){
-            for(int i=0;i<productos.length;i++){
+
+        if (productos != null && productos.length > 0) {
+            for (int i = 0; i < productos.length; i++) {
                 //System.out.println(productos[i][2]);
-                dtm.addRow(new Object[]{productos[i][1],productos[i][2],productos[i][3],productos[i][5]});
+                dtm.addRow(new Object[]{productos[i][1], productos[i][2], productos[i][3], productos[i][5]});
             }
             jTable2.setRowSelectionInterval(0, 0);
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -60,7 +62,7 @@ public class BuscarProducto extends javax.swing.JInternalFrame {
         setMaximizable(true);
         setTitle("Busqueda de producto");
 
-        jPanel1.setBackground(new java.awt.Color(153, 255, 204));
+        jPanel1.setBackground(SoftGym.fondo);
 
         jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -94,7 +96,7 @@ public class BuscarProducto extends javax.swing.JInternalFrame {
         });
         jScrollPane2.setViewportView(jTable2);
 
-        jButton1.setText("Agregar");
+        jButton1.setText("Agregar a ticket");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -147,10 +149,10 @@ public class BuscarProducto extends javax.swing.JInternalFrame {
 
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
         // TODO add your handling code here:
-        if(evt.getKeyCode()==KeyEvent.VK_ESCAPE){
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             dispose();
         }
-        productos=pv.buscar_producto(jTextField1.getText());
+        productos = pv.buscar_producto(jTextField1.getText());
         //System.out.println(""+productos[0][2]);
         actualizartabla();
 
@@ -158,26 +160,24 @@ public class BuscarProducto extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        try{
-            String aux=jTable2.getValueAt(jTable2.getSelectedRow(),0).toString();
+        try {
+            String aux = jTable2.getValueAt(jTable2.getSelectedRow(), 0).toString();
             System.out.println(aux);
             SoftGym.prin.pv.agregarcarrito(aux, 1);
             //punto.agregarcarrito(aux, 1);
             dispose();
-        }
-        catch(Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
         // TODO add your handling code here:
-        
-        if(evt.getClickCount()==2){
+
+        if (evt.getClickCount() == 2) {
             jButton1ActionPerformed(null);
         }
     }//GEN-LAST:event_jTable2MouseClicked
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

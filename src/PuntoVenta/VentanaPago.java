@@ -25,23 +25,24 @@ public class VentanaPago extends javax.swing.JInternalFrame {
      * Creates new form VentanaPago
      */
     public static double tota;
-    usapv pv= new usapv();
+    usapv pv = new usapv();
+
     public VentanaPago() {
         initComponents();
     }
     Object[][] prod;
-   public void Ventana(String productos, String total ){
-        tota=Double.parseDouble(total);
-        jLabel2.setText(""+productos);
-        jLabel4.setText(""+total);
+
+    public void Ventana(String productos, String total) {
+        tota = Double.parseDouble(total);
+        jLabel2.setText("" + productos);
+        jLabel4.setText("" + total);
     }
-   
-   public void cobrar(Object[][] producto){
-       //DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
-       prod=producto;
-   }
-   
-   
+
+    public void cobrar(Object[][] producto) {
+        //DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
+        prod = producto;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -66,7 +67,7 @@ public class VentanaPago extends javax.swing.JInternalFrame {
         setClosable(true);
         setTitle("Cobrar");
 
-        jPanel1.setBackground(new java.awt.Color(153, 255, 204));
+        jPanel1.setBackground(SoftGym.fondo);
 
         jLabel1.setFont(new java.awt.Font("Agency FB", 1, 18)); // NOI18N
         jLabel1.setText("#Productos:");
@@ -183,68 +184,63 @@ public class VentanaPago extends javax.swing.JInternalFrame {
 
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
         // TODO add your handling code here:
-        double cambio =Double.parseDouble(jLabel4.getText());
+        double cambio = Double.parseDouble(jLabel4.getText());
         //cambio = Double.parseDouble(jLabel4.getText())-Double.parseDouble(jTextField1.getText());
-  //      jLabel7.setText("$"+cambio);
-               if(jTextField1.getText().equals("")){
-           //do nothing
-       }
-       else{ 
-           switch(evt.getKeyCode()){
-               case KeyEvent.VK_F2:
-                  jButton1ActionPerformed(null);
-               break;
-           }
-           NumberFormat formatter = new DecimalFormat("#0.00");
-           jLabel7.setText("$"+  formatter.format(Double.parseDouble( jTextField1.getText() )-cambio));
-       }
-        
+        //      jLabel7.setText("$"+cambio);
+        if (jTextField1.getText().equals("")) {
+            //do nothing
+        } else {
+            switch (evt.getKeyCode()) {
+                case KeyEvent.VK_F2:
+                    jButton1ActionPerformed(null);
+                    break;
+            }
+            NumberFormat formatter = new DecimalFormat("#0.00");
+            jLabel7.setText("$" + formatter.format(Double.parseDouble(jTextField1.getText()) - cambio));
+        }
+
     }//GEN-LAST:event_jTextField1KeyReleased
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        double tot=0;
-        String productos=" ";
-        if(!jTextField1.getText().equals("")&&Double.parseDouble(jTextField1.getText())>=0){
-            for(int i=0;i<prod.length;i++){
+        double tot = 0;
+        String productos = " ";
+        if (!jTextField1.getText().equals("") && Double.parseDouble(jTextField1.getText()) >= 0) {
+            for (int i = 0; i < prod.length; i++) {
                 pv.in_movimiento(
-                        prod[i][0].toString(), 
-                        "Salida", 
-                        (double)prod[i][2], 
-                        (double)prod[i][4], SoftGym.nombre, 
+                        prod[i][0].toString(),
+                        "Salida",
+                        (double) prod[i][2],
+                        (double) prod[i][4], SoftGym.nombre,
                         new Date());
-                productos=productos+""+prod[i][1]+"; ";
+                productos = productos + "" + prod[i][1] + "; ";
                 //tot=tot+(double)prod[i][5];
-                
+
                 System.out.println(prod[i][1]);
 
                 Object[][] inventario = pv.get_inventario(prod[i][0].toString(), "codigobarra");
-                double cantidad= ((double)inventario[0][3])-1;
-               // System.out.println(""+cantidad);
-                pv.actualizar("Inventario", new Object[]{inventario[0][0],inventario[0][1],inventario[0][2],cantidad,inventario[0][4],inventario[0][5]});
+                double cantidad = ((double) inventario[0][3]) - 1;
+                // System.out.println(""+cantidad);
+                pv.actualizar("Inventario", new Object[]{inventario[0][0], inventario[0][1], inventario[0][2], cantidad, inventario[0][4], inventario[0][5]});
             }
-            usadb db= new usadb();
-            db.in_ingreso(new Date(), "Otros", "Ventas:"+
-                    productos, 
+            usadb db = new usadb();
+            db.in_ingreso(new Date(), "Otros", "Ventas:"
+                    + productos,
                     tota, SoftGym.nombre);
             dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Ingrese la cantidad correcta");
         }
-        else{
-            JOptionPane.showMessageDialog(this,"Ingrese la cantidad correcta");
-        }
-        
-        
+
         /*PuntoVenta1 pv = new PuntoVenta1();
         pv.setVisible(true);
         Principal.jDesktopPane1.add(pv);*/
-        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

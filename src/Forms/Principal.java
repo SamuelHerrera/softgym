@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package softgym;
+package Forms;
 
 import Utilidades.usadb;
 import Utilidades.VerticalLabelUI;
@@ -40,20 +40,21 @@ import chrriis.dj.nativeswing.swtimpl.NativeInterface;
  * @author Erick
  */
 public class Principal extends javax.swing.JFrame {
+
     Label_Reloj reloj = new Label_Reloj();
-    private int x,y; 
-    public int IDCliente=-1;
-    public int IDUsuario=-1;
+    private int x, y;
+    public int IDCliente = -1;
+    public int IDUsuario = -1;
     private DPFPTemplate template;
     public LeerHuella_ConfimacionAdmin s;
     SoftGym soft = new SoftGym();
-    
+
     /**
      * Creates new form Principal
      */
     //
     public Principal() {
-        Botones b=new Botones(); 
+        Botones b = new Botones();
         soft.leer();
         initComponents();
         //JOptionPane.showMessageDialog(null,"Abierto");
@@ -62,95 +63,84 @@ public class Principal extends javax.swing.JFrame {
         jButton4.setVisible(false);
         jPanel8.setVisible(false);
         jPanel9.setVisible(false);
-        jPanel6.add(b,"menu1"); 
-        CardLayout paletas = (CardLayout)jPanel6.getLayout();
-        paletas.show(jPanel6, "menu1"); 
-        
+        jPanel6.add(b, "menu1");
+        CardLayout paletas = (CardLayout) jPanel6.getLayout();
+        paletas.show(jPanel6, "menu1");
 
         this.setExtendedState(MAXIMIZED_BOTH);
         repaint();
     }
-    
-    private void desplegarDatosCliente(){
-        usadb  db=new usadb();
-        Object client [][]= db.get_cliente(this.IDCliente, "idcliente");
+
+    private void desplegarDatosCliente() {
+        usadb db = new usadb();
+        Object client[][] = db.get_cliente(this.IDCliente, "idcliente");
         jTextField1.setText(client[0][1].toString());
         jTextField2.setText(client[0][2].toString());
         jTextField3.setText(client[0][3].toString());
         jTextArea2.setText(client[0][5].toString());
-        
-        Object[][] fc=db.get_fechaCorteClientes(this.IDCliente, "idcliente");
+
+        Object[][] fc = db.get_fechaCorteClientes(this.IDCliente, "idcliente");
         //manejador para los colores de la fecha de corte
-        Date hoy=new Date();
-        hoy.setSeconds(0);hoy.setMinutes(0);hoy.setHours(0);
-        Date fec=new Date(((Date)fc[0][1]).getTime());
-        fec.setSeconds(0);fec.setMinutes(0);fec.setHours(0);
-        System.out.println(hoy.compareTo(fec)+"     " +hoy.toLocaleString()+"   "+fec.toLocaleString());
-        Image imagen=db.get_fotocliente(this.IDCliente, "idcliente");
-        if(imagen!=null){
+        Date hoy = new Date();
+        hoy.setSeconds(0);
+        hoy.setMinutes(0);
+        hoy.setHours(0);
+        Date fec = new Date(((Date) fc[0][1]).getTime());
+        fec.setSeconds(0);
+        fec.setMinutes(0);
+        fec.setHours(0);
+        System.out.println(hoy.compareTo(fec) + "     " + hoy.toLocaleString() + "   " + fec.toLocaleString());
+        Image imagen = db.get_fotocliente(this.IDCliente, "idcliente");
+        if (imagen != null) {
             jLabel2.setText("");
-            jLabel2.setIcon(new ImageIcon(imagen.getScaledInstance(193, 193,Image.SCALE_DEFAULT)));}
-        
-        if(hoy.toLocaleString().equals(fec.toLocaleString())||hoy.compareTo(fec)==1){
+            jLabel2.setIcon(new ImageIcon(imagen.getScaledInstance(193, 193, Image.SCALE_DEFAULT)));
+        }
+
+        if (hoy.toLocaleString().equals(fec.toLocaleString()) || hoy.compareTo(fec) == 1) {
             jPanel3.setBackground(Color.red);
             jLabel4.setText(fec.toLocaleString().substring(0, 11));
             repaint();
             JOptionPane.showMessageDialog(this, "El usuario ha pasado la fecha de corte", "Aviso de ingreso", JOptionPane.WARNING_MESSAGE);
-        }
-        else{
-            Date comfec=new Date(fec.getTime()-259200000);
-            System.out.println(hoy.compareTo(fec)+"     " +hoy.toLocaleString()+"   "+fec.toLocaleString());
-            if(hoy.compareTo(comfec)==1){
-                
+        } else {
+            Date comfec = new Date(fec.getTime() - 259200000);
+            System.out.println(hoy.compareTo(fec) + "     " + hoy.toLocaleString() + "   " + fec.toLocaleString());
+            if (hoy.compareTo(comfec) == 1) {
+
                 jPanel3.setBackground(Color.YELLOW);
                 jLabel4.setText(fec.toLocaleString().substring(0, 11));
                 repaint();
-            }
-            else{
-                jPanel3.setBackground(new Color(255,255,255,100));
+            } else {
+                jPanel3.setBackground(new Color(255, 255, 255, 100));
                 jLabel4.setText(fec.toLocaleString().substring(0, 11));
                 repaint();
             }
         }
-        
-        
-        
-        
-        
+
     }
-    
-    
-    
-    public void BusquedaCompleta(int ID){//metodo para desplgar en ventana el resultado
-        if(ID==(-1)){
+
+    public void BusquedaCompleta(int ID) {//metodo para desplgar en ventana el resultado
+        if (ID == (-1)) {
             //JOptionPane.showMessageDialog(null, "No se ha encontrado la huella D");
-            this.IDCliente=-1;
-        jTextField1.setText("");
-        jLabel1.setIcon(null);
-        jTextField2.setText("");
-        jTextField3.setText("");
-        jTextArea2.setText("");
-        jLabel2.setIcon(null);
-        jLabel4.setText("");
-        jPanel3.setBackground(new Color(255,255,255,100));
-        repaint();
-        
-        
-        }
-        else{//se encontro la huella
-            this.IDCliente=ID;
-            usadb db=new usadb();
+            this.IDCliente = -1;
+            jTextField1.setText("");
+            jLabel1.setIcon(null);
+            jTextField2.setText("");
+            jTextField3.setText("");
+            jTextArea2.setText("");
+            jLabel2.setIcon(null);
+            jLabel4.setText("");
+            jPanel3.setBackground(new Color(255, 255, 255, 100));
+            repaint();
+
+        } else {//se encontro la huella
+            this.IDCliente = ID;
+            usadb db = new usadb();
             db.in_flujoDiarioCliente(new Date(), IDCliente);
             desplegarDatosCliente();
-            
+
         }
     }
 
-
-    
-    
-    
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -193,7 +183,7 @@ public class Principal extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
-        jLabel7 = new Label_Reloj();
+        jLabel7 = new Utilidades.Label_Reloj();
         jButton10 = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
         jButton14 = new javax.swing.JButton();
@@ -214,13 +204,13 @@ public class Principal extends javax.swing.JFrame {
         try{
             File f=new File(soft.direccion);
             if(!f.exists()||soft.direccion==null||soft.direccion.equals("\\imagenes\\Nike.jpg")){
-                Borde_ImagenFondo borde = new Borde_ImagenFondo(ImageIO.read(this.getClass().
+                Utilidades.Borde_ImagenFondo borde = new Utilidades.Borde_ImagenFondo(ImageIO.read(this.getClass().
                     getResource("/imagenes/Nike.jpg")));
             jPanel1.setBorder(borde);
         }
         else{
 
-            Borde_ImagenFondo borde = new Borde_ImagenFondo(ImageIO.read(f));
+            Utilidades.Borde_ImagenFondo borde = new Utilidades.Borde_ImagenFondo(ImageIO.read(f));
             jPanel1.setBorder(borde);
         }
     }
@@ -568,6 +558,12 @@ public class Principal extends javax.swing.JFrame {
 
     jLabel11.setText("jLabel11");
 
+    jDesktopPane1.setLayer(jButton4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+    jDesktopPane1.setLayer(jPanel9, javax.swing.JLayeredPane.DEFAULT_LAYER);
+    jDesktopPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+    jDesktopPane1.setLayer(jLabel10, javax.swing.JLayeredPane.DEFAULT_LAYER);
+    jDesktopPane1.setLayer(jLabel11, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
     javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
     jDesktopPane1.setLayout(jDesktopPane1Layout);
     jDesktopPane1Layout.setHorizontalGroup(
@@ -576,16 +572,14 @@ public class Principal extends javax.swing.JFrame {
             .addContainerGap()
             .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel10)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jDesktopPane1Layout.createSequentialGroup()
                     .addComponent(jButton4)
                     .addGap(222, 222, 222)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 156, Short.MAX_VALUE)))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGap(0, 0, Short.MAX_VALUE)
             .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
     );
     jDesktopPane1Layout.setVerticalGroup(
@@ -604,11 +598,6 @@ public class Principal extends javax.swing.JFrame {
             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGap(0, 0, Short.MAX_VALUE))
     );
-    jDesktopPane1.setLayer(jButton4, javax.swing.JLayeredPane.DEFAULT_LAYER);
-    jDesktopPane1.setLayer(jPanel9, javax.swing.JLayeredPane.DEFAULT_LAYER);
-    jDesktopPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-    jDesktopPane1.setLayer(jLabel10, javax.swing.JLayeredPane.DEFAULT_LAYER);
-    jDesktopPane1.setLayer(jLabel11, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
     jPanel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
     jPanel7.setFocusable(false);
@@ -748,7 +737,7 @@ public class Principal extends javax.swing.JFrame {
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(jButton12)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(jButton11)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -848,75 +837,69 @@ public class Principal extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         soft.leer();
-        if(soft.minimizar.equals("true")){
-        SoftGym.syd.stop();
-               s=new LeerHuella_ConfimacionAdmin(new VentanaMinimizar("cerrar"));
-        }
-        else{
+        if (soft.minimizar.equals("true")) {
+            SoftGym.syd.stop();
+            s = new LeerHuella_ConfimacionAdmin(new VentanaMinimizar("cerrar"));
+        } else {
             System.exit(0);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jPanel7MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MousePressed
         // TODO add your handling code here:
-        x = evt.getX  ()  ; 
-        y = evt.getY ()  ; 
+        x = evt.getX();
+        y = evt.getY();
     }//GEN-LAST:event_jPanel7MousePressed
 
     private void jPanel7MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MouseDragged
         // TODO add your handling code here
-        if(getExtendedState()==NORMAL){
-            Point point = MouseInfo.getPointerInfo().getLocation() ; 
-            setLocation(point.x - x, point.y - y)   ; 
+        if (getExtendedState() == NORMAL) {
+            Point point = MouseInfo.getPointerInfo().getLocation();
+            setLocation(point.x - x, point.y - y);
         }
     }//GEN-LAST:event_jPanel7MouseDragged
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         soft.leer();
-        if(soft.minimizar.equals("true")){
-        SoftGym.syd.stop();
-               s=new LeerHuella_ConfimacionAdmin(new VentanaMinimizar("minimizar"));
-        }
-        else{
-            if(mb!=null){
+        if (soft.minimizar.equals("true")) {
+            SoftGym.syd.stop();
+            s = new LeerHuella_ConfimacionAdmin(new VentanaMinimizar("minimizar"));
+        } else {
+            if (mb != null) {
                 mb.setVisible(false);
                 mb.dispose();
-                mb=null;
+                mb = null;
                 NativeInterface.close();
                 jButton12.setText("Abrir Musica");
             }
-            
-            
-                            SoftGym.prin.removeNotify();
-                            SoftGym.prin.setUndecorated(false);
-                            SoftGym.prin.setLocationRelativeTo(null);
-                            SoftGym.prin.jPanel7.setVisible(false);
-                            SoftGym.prin.jButton4.setVisible(true);
-                            SoftGym.prin.jPanel9.setVisible(true);
-                            SoftGym.prin.setExtendedState(NORMAL); 
-                            SoftGym.prin.setSize(600, 400);
-                            SoftGym.prin.addNotify();
-                            SoftGym.prin.setExtendedState(ICONIFIED);
-            
+
+            SoftGym.prin.removeNotify();
+            SoftGym.prin.setUndecorated(false);
+            SoftGym.prin.setLocationRelativeTo(null);
+            SoftGym.prin.jPanel7.setVisible(false);
+            SoftGym.prin.jButton4.setVisible(true);
+            SoftGym.prin.jPanel9.setVisible(true);
+            SoftGym.prin.setExtendedState(NORMAL);
+            SoftGym.prin.setSize(600, 400);
+            SoftGym.prin.addNotify();
+            SoftGym.prin.setExtendedState(ICONIFIED);
+
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        if(mb!=null){
+        if (mb != null) {
             mb.setVisible(false);
             mb.dispose();
-            mb=null;
-            
+            mb = null;
+
             NativeInterface.close();
             jButton12.setText("Abrir Musica");
         }
-            
-        
-        
-        if(getExtendedState()==NORMAL){
+
+        if (getExtendedState() == NORMAL) {
             removeNotify();
             setUndecorated(true);
             jPanel7.setVisible(true);
@@ -924,28 +907,25 @@ public class Principal extends javax.swing.JFrame {
             jPanel9.setVisible(false);
             setExtendedState(MAXIMIZED_BOTH);
             addNotify();
-        }
-        else{
-            if(this.isUndecorated()){
+        } else {
+            if (this.isUndecorated()) {
                 soft.leer();
-               if(soft.minimizar.equals("true")){ 
-               SoftGym.syd.stop();
-               s=new LeerHuella_ConfimacionAdmin(new VentanaMinimizar("ventana"));
-               }
-               else{
-                            SoftGym.prin.removeNotify();
-                            SoftGym.prin.setUndecorated(false);
-                            SoftGym.prin.setLocationRelativeTo(null);
-                            SoftGym.prin.jPanel7.setVisible(false);
-                            SoftGym.prin.jButton4.setVisible(true);
-                            SoftGym.prin.jPanel9.setVisible(true);
-                            SoftGym.prin.setExtendedState(NORMAL); 
-                            SoftGym.prin.setSize(600, 400);
-                            SoftGym.prin.addNotify();
-               }
-            }
-            else{
-                
+                if (soft.minimizar.equals("true")) {
+                    SoftGym.syd.stop();
+                    s = new LeerHuella_ConfimacionAdmin(new VentanaMinimizar("ventana"));
+                } else {
+                    SoftGym.prin.removeNotify();
+                    SoftGym.prin.setUndecorated(false);
+                    SoftGym.prin.setLocationRelativeTo(null);
+                    SoftGym.prin.jPanel7.setVisible(false);
+                    SoftGym.prin.jButton4.setVisible(true);
+                    SoftGym.prin.jPanel9.setVisible(true);
+                    SoftGym.prin.setExtendedState(NORMAL);
+                    SoftGym.prin.setSize(600, 400);
+                    SoftGym.prin.addNotify();
+                }
+            } else {
+
                 removeNotify();
                 setUndecorated(true);
                 jPanel7.setVisible(true);
@@ -964,7 +944,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void jButton4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MousePressed
         // TODO add your handling code here:
-        if(evt.getButton()==3){
+        if (evt.getButton() == 3) {
             jPanel8.setVisible(true);
         }
     }//GEN-LAST:event_jButton4MousePressed
@@ -976,31 +956,29 @@ public class Principal extends javax.swing.JFrame {
 
     private void jPanel9MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel9MouseExited
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_jPanel9MouseExited
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
         soft.leer();
-        if(SoftGym.usuario.equals("normal")&&soft.reportes.equals("false")){
-         JOptionPane.showMessageDialog(null, "No cuentas con los permisos necesarios para ejecutar esta opción");
-        }
-        else{
-        Concentrados c=new Concentrados();
-        c.setVisible(true);
-        c.setSize(700, 450);
-        Principal.jDesktopPane1.add(c);
+        if (SoftGym.usuario.equals("normal") && soft.reportes.equals("false")) {
+            JOptionPane.showMessageDialog(null, "No cuentas con los permisos necesarios para ejecutar esta opción");
+        } else {
+            Concentrados c = new Concentrados();
+            c.setVisible(true);
+            c.setSize(700, 450);
+            Principal.jDesktopPane1.add(c);
         }
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
         // TODO add your handling code here:
         soft.leer();
-        if(SoftGym.usuario.equals("normal")&&soft.reportes.equals("false")){
-         JOptionPane.showMessageDialog(null, "No cuentas con los permisos necesarios para ejecutar esta opción");
-        }
-        else{
-        jButton6ActionPerformed(null);
+        if (SoftGym.usuario.equals("normal") && soft.reportes.equals("false")) {
+            JOptionPane.showMessageDialog(null, "No cuentas con los permisos necesarios para ejecutar esta opción");
+        } else {
+            jButton6ActionPerformed(null);
         }
     }//GEN-LAST:event_jLabel8MouseClicked
 
@@ -1011,9 +989,9 @@ public class Principal extends javax.swing.JFrame {
 
     private void jTextArea2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextArea2KeyPressed
         // TODO add your handling code here:
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             System.out.println("insercion realizada");
-            usadb db=new usadb();
+            usadb db = new usadb();
             db.actualizarNotasCliente(IDCliente, jTextArea2.getText());
         }
     }//GEN-LAST:event_jTextArea2KeyPressed
@@ -1021,25 +999,23 @@ public class Principal extends javax.swing.JFrame {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
-    private Configuracion c=null;
+    private Configuracion c = null;
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         soft.leer();
-        if(SoftGym.usuario.equals("normal")&&soft.ajustes.equals("false")){
-            JOptionPane.showMessageDialog(null,"No tienes los perimsos para abrir esta ventana");
-        }
-        else{
-            if(c==null){
-                c=new Configuracion();
+        if (SoftGym.usuario.equals("normal") && soft.ajustes.equals("false")) {
+            JOptionPane.showMessageDialog(null, "No tienes los perimsos para abrir esta ventana");
+        } else {
+            if (c == null) {
+                c = new Configuracion();
                 c.setLocationRelativeTo(null);
                 c.setVisible(true);
-            }
-            else{
+            } else {
                 c.setExtendedState(NORMAL);
                 c.setVisible(true);
                 c.toFront();
                 c.setLocationRelativeTo(null);
-                
+
             }
         }
     }//GEN-LAST:event_jButton5ActionPerformed
@@ -1047,32 +1023,31 @@ public class Principal extends javax.swing.JFrame {
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
         // TODO add your handling code here:
         soft.leer();
-        if(SoftGym.usuario.equals("normal")&&soft.ajustes.equals("false")){
-            JOptionPane.showMessageDialog(null,"No tienes los perimsos para abrir esta ventana");
-        }
-        else{
-        Configuracion c=new Configuracion();
-        c.setVisible(true);
+        if (SoftGym.usuario.equals("normal") && soft.ajustes.equals("false")) {
+            JOptionPane.showMessageDialog(null, "No tienes los perimsos para abrir esta ventana");
+        } else {
+            Configuracion c = new Configuracion();
+            c.setVisible(true);
         }
     }//GEN-LAST:event_jLabel5MouseClicked
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-        morosos m=new morosos();
+        morosos m = new morosos();
         jDesktopPane1.add(m);
         m.setVisible(true);
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
         // TODO add your handling code here:
-        morosos m=new morosos();
+        morosos m = new morosos();
         jDesktopPane1.add(m);
         m.setVisible(true);
     }//GEN-LAST:event_jLabel9MouseClicked
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         // TODO add your handling code here:
-        if(evt.getKeyCode()==KeyEvent.VK_ALT){
+        if (evt.getKeyCode() == KeyEvent.VK_ALT) {
             try {
                 System.out.println("entro a ALT");
                 Robot robot = new Robot();
@@ -1084,21 +1059,21 @@ public class Principal extends javax.swing.JFrame {
             }
             this.requestFocus();
         }
-         if(evt.getKeyCode()==KeyEvent.VK_ALT){
-             this.requestFocus();
-         }
+        if (evt.getKeyCode() == KeyEvent.VK_ALT) {
+            this.requestFocus();
+        }
     }//GEN-LAST:event_formKeyPressed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         // TODO add your handling code here:
-            usadb db=new usadb();
-            db.actualizarNotasCliente(IDCliente, jTextArea2.getText());
-            JOptionPane.showMessageDialog(this, "Se ha guardado la nota");
+        usadb db = new usadb();
+        db.actualizarNotasCliente(IDCliente, jTextArea2.getText());
+        JOptionPane.showMessageDialog(this, "Se ha guardado la nota");
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         // TODO add your handling code here:
-        Buscar b=new Buscar(new javax.swing.JFrame(),true);
+        Buscar b = new Buscar(new javax.swing.JFrame(), true);
         b.setVisible(true);
     }//GEN-LAST:event_jButton10ActionPerformed
 
@@ -1107,73 +1082,37 @@ public class Principal extends javax.swing.JFrame {
         SoftGym.syd.stop();
         SoftGym.syd0.stop();
         dispose();
-        SoftGym.l=new login();
+        SoftGym.l = new login();
         l.setLocationRelativeTo(null);
-        syd0=new LeerHuella_Login(l);
-        
+        syd0 = new LeerHuella_Login(l);
+
     }//GEN-LAST:event_jButton11ActionPerformed
     private MusicBrowser mb;
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
         // TODO add your handling code here:;        
-        if(mb==null){
-            mb=new MusicBrowser();
+        if (mb == null) {
+            mb = new MusicBrowser();
             Principal.jDesktopPane1.add(mb);
             mb.setVisible(true);
             jButton12.setText("Cerrar Musica");
-        }
-        else{
+        } else {
             mb.setVisible(false);
             mb.dispose();
-            mb=null;
-            
+            mb = null;
+
             NativeInterface.close();
             jButton12.setText("Abrir Musica");
         }
-        
+
     }//GEN-LAST:event_jButton12ActionPerformed
 
     public PuntoVenta pv;
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
         // TODO add your handling code here:
-         pv= new PuntoVenta();
+        pv = new PuntoVenta();
         pv.setVisible(true);
         Principal.jDesktopPane1.add(pv);
     }//GEN-LAST:event_jButton14ActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Principal().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel botones;

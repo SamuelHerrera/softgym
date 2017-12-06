@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package softgym;
+package Forms;
 
 import Utilidades.usadb;
 import java.util.Date;
@@ -20,23 +20,24 @@ public class morosos extends javax.swing.JInternalFrame {
      */
     public morosos() {
         initComponents();
-        usadb db=new usadb();
-        DefaultTableModel dtm=(DefaultTableModel) jTable1.getModel();
-        Date hoy=new Date();
-        Date iniciodelostiempos=new Date(); iniciodelostiempos.setYear(0);
-        Object[][] clienmor=db.get_fechaCorteClientes(new Object[]{iniciodelostiempos,hoy}, "fechacorte");
-        
-        for(int i=0;clienmor!=null&&i<clienmor.length;i++){
-            Object[][] cliente=db.get_cliente(clienmor[i][0], "idcliente");
-            Object[][] pagos=db.get_historialPagoClientes(clienmor[i][0], "idcliente");
-            Object[][] ingreso=db.get_ingresos(pagos[pagos.length-1][1], "idIngresos");
-            System.out.println( pagos[pagos.length-1][1] );
-            
-            System.out.println(( (Date)ingreso[0][1]).toLocaleString() );
+        usadb db = new usadb();
+        DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
+        Date hoy = new Date();
+        Date iniciodelostiempos = new Date();
+        iniciodelostiempos.setYear(0);
+        Object[][] clienmor = db.get_fechaCorteClientes(new Object[]{iniciodelostiempos, hoy}, "fechacorte");
+
+        for (int i = 0; clienmor != null && i < clienmor.length; i++) {
+            Object[][] cliente = db.get_cliente(clienmor[i][0], "idcliente");
+            Object[][] pagos = db.get_historialPagoClientes(clienmor[i][0], "idcliente");
+            Object[][] ingreso = db.get_ingresos(pagos[pagos.length - 1][1], "idIngresos");
+            System.out.println(pagos[pagos.length - 1][1]);
+
+            System.out.println(((Date) ingreso[0][1]).toLocaleString());
             dtm.addRow(new Object[]{
                 cliente[0][1],
                 clienmor[i][1],
-                ((Date)ingreso[0][1]).toLocaleString().substring(0, 11)});
+                ((Date) ingreso[0][1]).toLocaleString().substring(0, 11)});
         }
     }
 
@@ -79,16 +80,21 @@ public class morosos extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 559, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
