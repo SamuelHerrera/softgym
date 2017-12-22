@@ -204,7 +204,7 @@ public class usapv {
                     break;*/
                 case "fecha":
                     Object[] aux = (Object[]) dato;
-                    PreparedStatement pstmt = (PreparedStatement) c.prepareStatement("SELECT * FROM Corte WHERE fecha >= ? AND fecha <= ?");
+                    PreparedStatement pstmt = (PreparedStatement) c.prepareStatement("SELECT * FROM corte WHERE inicioperiodo >= ? AND inicioperiodo <= ?");
                     pstmt.setDate(1, new java.sql.Date(((Date) aux[0]).getTime()));
                     pstmt.setDate(2, new java.sql.Date(((Date) aux[1]).getTime()));
                     rs = pstmt.executeQuery();

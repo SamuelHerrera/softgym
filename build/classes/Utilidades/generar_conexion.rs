@@ -1,0 +1,2 @@
+Utilidades.generar_conexion
+Utilidades.MiShDwnHook

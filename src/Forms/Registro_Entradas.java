@@ -35,9 +35,11 @@ public class Registro_Entradas extends javax.swing.JInternalFrame {
         termino.setDate(inicio.getDate() + 1);
         Object[][] flujo = db.get_flujoDiarioClientes(new Object[]{inicio, termino}, "fechahora");
 
-        for (int i = flujo.length - 1; flujo != null && i >= 0; i--) {
-            Object[][] cliente = db.get_cliente(flujo[i][2], "idcliente");
-            dtm.addRow(new Object[]{flujo[i][2], cliente[0][1], ((Date) flujo[i][1]).toLocaleString().substring(11, 18)});
+        if (flujo != null) {
+            for (int i = flujo.length - 1; i >= 0; i--) {
+                Object[][] cliente = db.get_cliente(flujo[i][2], "idcliente");
+                dtm.addRow(new Object[]{flujo[i][2], cliente[0][1], ((Date) flujo[i][1]).toLocaleString().substring(11, 18)});
+            }
         }
 
     }

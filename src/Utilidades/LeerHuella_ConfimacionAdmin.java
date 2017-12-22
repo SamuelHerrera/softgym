@@ -198,7 +198,7 @@ public class LeerHuella_ConfimacionAdmin {
                                 SoftGym.prin.setUndecorated(false);
                                 SoftGym.prin.setLocationRelativeTo(null);
                                 SoftGym.prin.setExtendedState(NORMAL);
-                                SoftGym.prin.setSize(600, 400);
+                                SoftGym.prin.setSize(1000, 700);
                                 SoftGym.prin.addNotify();
                                 break;
 
@@ -207,7 +207,7 @@ public class LeerHuella_ConfimacionAdmin {
                                 SoftGym.prin.setUndecorated(false);
                                 SoftGym.prin.setLocationRelativeTo(null);
                                 SoftGym.prin.setExtendedState(NORMAL);
-                                SoftGym.prin.setSize(600, 400);
+                                SoftGym.prin.setSize(1000, 700);
                                 SoftGym.prin.addNotify();
                                 SoftGym.prin.setExtendedState(ICONIFIED);
 

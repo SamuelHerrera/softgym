@@ -88,7 +88,7 @@ public class Editar_Registro_Cliente extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setAlwaysOnTop(true);
         setUndecorated(true);
         setResizable(false);
@@ -340,7 +340,7 @@ public class Editar_Registro_Cliente extends javax.swing.JFrame {
             @Override
             public void run() {
                 try {
-                    Process p = new ProcessBuilder(".\\StillCap.exe", "/device:1", "/clipboard", "/delay:1", "/resolution:160x120").start();
+                    Process p = new ProcessBuilder(".\\StillCap.exe", "/device:1", "/clipboard", "/delay:1", "/resolution:320x240", "/nostillpin").start();
                     p.waitFor();
                     // Obtiene el Clipboard del sistema
                     Clipboard cb = Toolkit.getDefaultToolkit().getSystemClipboard();
