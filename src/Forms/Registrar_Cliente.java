@@ -399,7 +399,7 @@ public class Registrar_Cliente extends javax.swing.JFrame {
             @Override
             public void run() {
                 try {
-                    Process p = new ProcessBuilder(".\\StillCap.exe", "/clipboard", "/delay:3", "/device:1", "/resolution:160x120").start();
+                    Process p = new ProcessBuilder(".\\StillCap.exe", "/clipboard", "/delay:1", "/device:1", "/resolution:320x240", "/nostillpin").start();
                     p.waitFor();
                     Clipboard cb = Toolkit.getDefaultToolkit().getSystemClipboard();
                     Transferable t = cb.getContents(null);

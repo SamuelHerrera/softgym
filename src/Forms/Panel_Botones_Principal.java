@@ -10,6 +10,8 @@ import Utilidades.InscripcionHuella_Todos;
 import Utilidades.SoftGym;
 import java.awt.Color;
 import java.awt.Image;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -48,7 +50,7 @@ public class Panel_Botones_Principal extends javax.swing.JPanel {
 
         setBackground(new Color(0,0,0,0));
 
-        jPanel1.setBackground(new Color(100,255,100,50));
+        jPanel1.setBackground(new Color(0,0,0,80));
 
         jButton8.setFont(new java.awt.Font("Agency FB", 0, 24)); // NOI18N
         jButton8.setText("Historial Pagos");
@@ -131,7 +133,7 @@ public class Panel_Botones_Principal extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel2.setBackground(new Color(255,255,100,50));
+        jPanel2.setBackground(new Color(0,0,0,80));
 
         jButton1.setFont(new java.awt.Font("Agency FB", 0, 24)); // NOI18N
         jButton1.setText("Entrada Efectivo");
@@ -207,6 +209,7 @@ public class Panel_Botones_Principal extends javax.swing.JPanel {
         // TODO add your handling code here:
         IN_Efectivo ag = new IN_Efectivo();
         Principal.jDesktopPane1.add(ag);
+        ag.moveToFront();
         ag.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -214,25 +217,38 @@ public class Panel_Botones_Principal extends javax.swing.JPanel {
         // TODO add your handling code here:
         OUT_Efectivo as = new OUT_Efectivo();
         Principal.jDesktopPane1.add(as);
+        as.moveToFront();
         as.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-        usadb db = new usadb();
+        final usadb db = new usadb();
 
         if (SoftGym.prin.IDCliente == (-1)) {
-            Busqueda_Cliente b = new Busqueda_Cliente(new javax.swing.JFrame(), true);
+            Busqueda_Cliente b = new Busqueda_Cliente(SoftGym.prin, true);
             b.setLocationRelativeTo(null);
             b.setVisible(true);
-            Object[][] cliente = db.get_cliente(SoftGym.prin.IDCliente, "idcliente");
-            Image fotocliente = db.get_fotocliente(SoftGym.prin.IDCliente, "idcliente");
-            Editar_Registro_Cliente ac = new Editar_Registro_Cliente();
-            ac.setLocationRelativeTo(null);
-            ac.DesplegarCliente((String) cliente[0][1], (String) cliente[0][2], (String) cliente[0][3], fotocliente);
-            ac.setVisible(true);
-            SoftGym.syd.stop();
-            SoftGym.hu = new InscripcionHuella_Todos(ac);
+            new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(Panel_Botones_Principal.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    Object[][] cliente = db.get_cliente(SoftGym.prin.IDCliente, "idcliente");
+                    Image fotocliente = db.get_fotocliente(SoftGym.prin.IDCliente, "idcliente");
+                    Editar_Registro_Cliente ac = new Editar_Registro_Cliente();
+                    ac.setLocationRelativeTo(null);
+                    System.out.println(cliente);
+                    ac.DesplegarCliente((String) cliente[0][1], (String) cliente[0][2], (String) cliente[0][3], fotocliente);
+                    ac.setVisible(true);
+                    SoftGym.syd.stop();
+                    SoftGym.hu = new InscripcionHuella_Todos(ac);
+                }
+            }.start();
+
         } else {
             Object[][] cliente = db.get_cliente(SoftGym.prin.IDCliente, "idcliente");
             Image fotocliente = db.get_fotocliente(SoftGym.prin.IDCliente, "idcliente");
@@ -252,6 +268,7 @@ public class Panel_Botones_Principal extends javax.swing.JPanel {
         // TODO add your handling code here:
         Registro_Pagos_Cliente hpc = new Registro_Pagos_Cliente();
         Principal.jDesktopPane1.add(hpc);
+        hpc.moveToFront();
         hpc.setVisible(true);
     }//GEN-LAST:event_jButton8ActionPerformed
 

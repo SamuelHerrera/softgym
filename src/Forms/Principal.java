@@ -31,8 +31,11 @@ import static Utilidades.SoftGym.syd0;
 import chrriis.dj.nativeswing.swtimpl.NativeInterface;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import javax.swing.JDialog;
 import javax.swing.Timer;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -61,9 +64,9 @@ public class Principal extends javax.swing.JFrame {
         initComponents();
         //JOptionPane.showMessageDialog(null,"Abierto");
         jLabel11.setText(SoftGym.nombre);
-        jPanel6.add(b, "menu1");
-        CardLayout paletas = (CardLayout) jPanel6.getLayout();
-        paletas.show(jPanel6, "menu1");
+        //jPanel6.add(b, "menu1");
+        //CardLayout paletas = (CardLayout) jPanel6.getLayout();
+        //paletas.show(jPanel6, "menu1");
 
         this.setExtendedState(MAXIMIZED_BOTH);
         repaint();
@@ -117,7 +120,23 @@ public class Principal extends javax.swing.JFrame {
             jPanel3.setBackground(Color.red);
             jLabel4.setText(fec.toLocaleString().substring(0, 11));
             repaint();
-            JOptionPane.showMessageDialog(this, "El usuario ha pasado la fecha de corte", "Aviso de ingreso", JOptionPane.WARNING_MESSAGE);
+            final JOptionPane msg = new JOptionPane("El usuario ha pasado la fecha de corte", JOptionPane.WARNING_MESSAGE);
+            final JDialog dlg = msg.createDialog("Aviso de ingreso");
+            dlg.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+            dlg.addComponentListener(new ComponentAdapter() {
+                @Override
+                public void componentShown(ComponentEvent e) {
+                    super.componentShown(e);
+                    final Timer t = new Timer(3000, new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            dlg.setVisible(false);
+                        }
+                    });
+                    t.start();
+                }
+            });
+            dlg.setVisible(true);
         } else {
             Date comfec = new Date(fec.getTime() - 259200000);
             if (hoy.compareTo(comfec) == 1) {
@@ -175,12 +194,12 @@ public class Principal extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jPanel6 = new javax.swing.JPanel();
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea2 = new javax.swing.JTextArea();
+        panel_Botones_Principal1 = new Forms.Panel_Botones_Principal();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -193,7 +212,6 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem6 = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
         jMenuItem5 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("SoftGym");
@@ -339,11 +357,6 @@ public class Principal extends javax.swing.JFrame {
             .addContainerGap())
     );
 
-    jPanel6.setBackground(new Color(255,255,255,100));
-    jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-    jPanel6.add(new Forms.Panel_Botones_Principal());
-    jPanel6.setLayout(new java.awt.CardLayout());
-
     jTextField1.setEditable(false);
     jTextField1.setBackground(new java.awt.Color(255, 255, 255));
     jTextField1.setFont(new java.awt.Font("Agency FB", 1, 36)); // NOI18N
@@ -411,11 +424,11 @@ public class Principal extends javax.swing.JFrame {
     jDesktopPane1.setLayer(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
     jDesktopPane1.setLayer(jPanel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
     jDesktopPane1.setLayer(jPanel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-    jDesktopPane1.setLayer(jPanel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
     jDesktopPane1.setLayer(jTextField1, javax.swing.JLayeredPane.DEFAULT_LAYER);
     jDesktopPane1.setLayer(jTextField2, javax.swing.JLayeredPane.DEFAULT_LAYER);
     jDesktopPane1.setLayer(jTextField3, javax.swing.JLayeredPane.DEFAULT_LAYER);
     jDesktopPane1.setLayer(jScrollPane2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+    jDesktopPane1.setLayer(panel_Botones_Principal1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
     javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
     jDesktopPane1.setLayout(jDesktopPane1Layout);
@@ -423,37 +436,34 @@ public class Principal extends javax.swing.JFrame {
         jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(jDesktopPane1Layout.createSequentialGroup()
             .addContainerGap()
+            .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addComponent(panel_Botones_Principal1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane2))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE))
-                .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextField1)
+                .addComponent(jTextField2)
+                .addComponent(jTextField3)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
+                    .addGap(0, 45, Short.MAX_VALUE)
+                    .addComponent(jLabel10)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jScrollPane2))
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jTextField1)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE)
-                        .addComponent(jTextField3)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
-                            .addGap(0, 0, Short.MAX_VALUE)
-                            .addComponent(jLabel10)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jButton11)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jButton3)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jButton2)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addComponent(jButton11)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jButton3)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jButton2)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
             .addContainerGap())
     );
     jDesktopPane1Layout.setVerticalGroup(
@@ -482,9 +492,9 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
-            .addContainerGap())
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addComponent(panel_Botones_Principal1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addContainerGap(20, Short.MAX_VALUE))
     );
 
     javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -554,9 +564,6 @@ public class Principal extends javax.swing.JFrame {
 
     jMenuBar1.add(jMenu1);
 
-    jMenu2.setText("Ventana");
-    jMenuBar1.add(jMenu2);
-
     setJMenuBar(jMenuBar1);
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -567,7 +574,7 @@ public class Principal extends javax.swing.JFrame {
     );
     layout.setVerticalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 579, Short.MAX_VALUE)
+        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 629, Short.MAX_VALUE)
     );
 
     pack();
@@ -609,7 +616,7 @@ public class Principal extends javax.swing.JFrame {
             SoftGym.prin.setUndecorated(false);
             SoftGym.prin.setLocationRelativeTo(null);
             SoftGym.prin.setExtendedState(NORMAL);
-            SoftGym.prin.setSize(600, 400);
+            SoftGym.prin.setSize(1000, 700);
             SoftGym.prin.addNotify();
             SoftGym.prin.setExtendedState(ICONIFIED);
 
@@ -631,6 +638,7 @@ public class Principal extends javax.swing.JFrame {
             removeNotify();
             setUndecorated(true);
             setExtendedState(MAXIMIZED_BOTH);
+            SoftGym.prin.setLocationRelativeTo(null);
             addNotify();
         } else {
             if (this.isUndecorated()) {
@@ -643,7 +651,7 @@ public class Principal extends javax.swing.JFrame {
                     SoftGym.prin.setUndecorated(false);
                     SoftGym.prin.setLocationRelativeTo(null);
                     SoftGym.prin.setExtendedState(NORMAL);
-                    SoftGym.prin.setSize(600, 400);
+                    SoftGym.prin.setSize(1000, 700);
                     SoftGym.prin.addNotify();
                 }
             } else {
@@ -704,7 +712,8 @@ public class Principal extends javax.swing.JFrame {
     public PuntoVenta pv;
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
-        Busqueda_Cliente b = new Busqueda_Cliente(new javax.swing.JFrame(), true);
+        Busqueda_Cliente b = new Busqueda_Cliente(this, true);
+        b.setLocationRelativeTo(null);
         b.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
@@ -712,6 +721,7 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
         Registro_Pagos_Atrasados m = new Registro_Pagos_Atrasados();
         jDesktopPane1.add(m);
+        m.moveToFront();
         m.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
@@ -719,6 +729,7 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
         pv = new PuntoVenta();
         pv.setVisible(true);
+        pv.moveToFront();
         Principal.jDesktopPane1.add(pv);
         pv.moveToFront();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
@@ -727,11 +738,12 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
         soft.leer();
         if (SoftGym.usuario.equals("normal") && soft.reportes.equals("false")) {
-            JOptionPane.showMessageDialog(null, "No cuentas con los permisos necesarios para ejecutar esta opción");
+            JOptionPane.showMessageDialog(this, "No cuentas con los permisos necesarios para ejecutar esta opción");
         } else {
             Registro_Global_Operaciones c = new Registro_Global_Operaciones();
             c.setVisible(true);
             c.setSize(700, 450);
+            c.moveToFront();
             Principal.jDesktopPane1.add(c);
             c.moveToFront();
         }
@@ -741,7 +753,7 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
         soft.leer();
         if (SoftGym.usuario.equals("normal") && soft.ajustes.equals("false")) {
-            JOptionPane.showMessageDialog(null, "No tienes los perimsos para abrir esta ventana");
+            JOptionPane.showMessageDialog(this, "No tienes los perimsos para abrir esta ventana");
         } else {
             if (c == null) {
                 c = new Configuracion_Global();
@@ -787,7 +799,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
@@ -798,7 +809,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
@@ -808,6 +818,7 @@ public class Principal extends javax.swing.JFrame {
     public javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
+    private Forms.Panel_Botones_Principal panel_Botones_Principal1;
     // End of variables declaration//GEN-END:variables
 }
 
