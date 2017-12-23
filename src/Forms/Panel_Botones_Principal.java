@@ -191,6 +191,7 @@ public class Panel_Botones_Principal extends javax.swing.JPanel {
         IN_Pago_Cliente p = new IN_Pago_Cliente();
         p.setVisible(true);
         Principal.jDesktopPane1.add(p);
+        p.moveToFront();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -260,6 +261,7 @@ public class Panel_Botones_Principal extends javax.swing.JPanel {
         Registro_Entradas ad = new Registro_Entradas();
         ad.setVisible(true);
         SoftGym.prin.jDesktopPane1.add(ad);
+        ad.moveToFront();
 
     }//GEN-LAST:event_jButton9ActionPerformed
 
@@ -269,6 +271,7 @@ public class Panel_Botones_Principal extends javax.swing.JPanel {
         //pv.setLocationRelativeTo(null);
         pv.setVisible(true);
         Principal.jDesktopPane1.add(pv);
+        pv.moveToFront();
     }//GEN-LAST:event_jButton10ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
