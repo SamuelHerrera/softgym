@@ -570,7 +570,7 @@ public class Principal extends javax.swing.JFrame {
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 963, Short.MAX_VALUE)
+        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 970, Short.MAX_VALUE)
     );
     layout.setVerticalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -731,6 +731,7 @@ public class Principal extends javax.swing.JFrame {
         pv.setVisible(true);
         pv.moveToFront();
         Principal.jDesktopPane1.add(pv);
+        pv.moveToFront();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
@@ -744,6 +745,7 @@ public class Principal extends javax.swing.JFrame {
             c.setSize(700, 450);
             c.moveToFront();
             Principal.jDesktopPane1.add(c);
+            c.moveToFront();
         }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 

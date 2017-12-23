@@ -199,7 +199,9 @@ public class InscripcionHuella_Todos {
                                 ((Editar_Registro_Cliente) frame).setTemplate(templateactual);
                                 JOptionPane.showMessageDialog((Editar_Registro_Cliente) frame, "La Plantilla de la Huella ha Sido Creada");
                             } else {
+                                ((Registrar_Cliente) frame).bandera = true;
                                 ((Registrar_Cliente) frame).setTemplate(templateactual);
+             
                                 JOptionPane.showMessageDialog((Registrar_Cliente) frame, "La Plantilla de la Huella ha Sido Creada");
                             }
                         }
